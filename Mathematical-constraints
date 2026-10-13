@@ -1,0 +1,59 @@
+Math gives you a precise vocabulary to constrain what an agent generates — instead of vague requests, you specify invariants, bounds, and models it must satisfy. Here's how that applies to storage work:
+
+**1. Complexity bounds as hard constraints**
+Instead of "write an efficient index," specify the Big-O requirements directly:
+> "Implement a B+tree insert with O(log n) worst-case time and O(1) amortized rebalancing. Prove the bound holds for your split logic before writing code."
+
+**2. Formal pre/post-conditions (Hoare logic)**
+Useful for consistency-critical code like WAL or commit paths:
+> "For `write_page(offset, data)`: precondition `offset % PAGE_SIZE == 0`; postcondition `crc(read_page(offset)) == crc(data)` after fsync. Generate the function and a property-based test that checks these."
+
+**3. Queueing theory for capacity/latency work**
+For sizing caches, IOPS, thread pools:
+> "Using an M/M/1 model with arrival rate λ=5000 req/s and target p99 latency <10ms, derive the minimum service rate μ and size the connection pool accordingly."
+Little's Law (`L = λW`) is great for prompting agents to reason about queue depth vs. throughput tradeoffs.
+
+**4. Probability/statistics for workload-aware design**
+Caching, prefetching, tiering decisions:
+> "Assume key access follows a Zipfian distribution (s=1.2) over 10M keys. Design an LRU-K eviction policy and estimate hit rate analytically before simulating it."
+
+**5. Information theory for compression/encoding choices**
+> "Given entropy ≈ 3.2 bits/symbol for this column's data, choose between dictionary encoding, RLE, or bit-packing, and justify with expected compression ratio."
+
+**6. Reliability math (Markov chains, MTBF) for replication**
+> "Model a 3-replica system as a Markov chain where each node fails independently with rate λ. Compute steady-state probability of data loss and recommend replication factor for 99.999% durability."
+
+**7. Set theory / lattice math for CRDTs and reconciliation**
+> "Design a state-based CRDT for this counter using a join-semilattice. Prove the merge function is commutative, associative, and idempotent."
+
+**8. Amortized analysis for LSM-tree write amplification**
+> "Using amortized analysis, derive the write amplification factor for a leveled compaction strategy with fanout 10, and compare it to tiered compaction."
+
+The general pattern: state the mathematical object (bound, distribution, invariant, proof obligation), then ask the agent to derive/verify before or alongside generating code. This tends to produce more defensible designs and catches hand-wavy solutions early, since the agent has to show its work against something checkable.
+
+
+
+Think of a B+tree like a filing cabinet organized for fast lookup, and "O(log n)" is just a way of saying "how much work grows very slowly even as the data gets huge."
+
+**The structure**
+A B+tree is a tree of sorted values, like a family tree, but every "parent" node holds a handful of sorted keys that act as signposts pointing to which "child" branch to go into next. The actual data lives only in the leaf nodes at the bottom; everything above is just for navigation.
+
+```
+              [ 50 | 100 ]
+             /      |      \
+       [10|30]   [60|80]  [120|150]
+```
+
+To find or insert something, you start at the top and ask "is my value less than 50? Between 50-100? Greater than 100?" — then step down into the right branch. Repeat until you hit a leaf.
+
+**Why that's "log n"**
+Each node holds several keys (say, 4), so at each level you eliminate most of the tree and only follow one branch down. If you have 1,000,000 records and each node branches into 4, you only need about log₄(1,000,000) ≈ 10 steps to get from the top to the bottom — instead of scanning all million records one by one.
+
+That's the "log n" part: the number of steps grows logarithmically, not linearly, with the number of records. Double the data, and you only add *one more step*, not double the work.
+
+**The "insert" part**
+1. Walk down the tree using the signposts (like a lookup) — this is the O(log n) part.
+2. Insert the new value into the correct leaf, keeping it sorted.
+3. If that leaf gets too full, split it in half and push a new signpost up to the parent — this can cascade upward, but only along the single path you walked, so it's still bounded by the tree's height (log n).
+
+**Analogy**: it's like using a dictionary. You don't read every page to find "octopus" — you jump to the O section, narrow down, narrow down again. Each jump cuts the remaining pages by a big factor, so even a huge dictionary only takes a handful of jumps to search. Inserting a new word works the same way: find where it belongs, slot it in, and only reorganize a small local area if a page overflows.
