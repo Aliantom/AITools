@@ -1,0 +1,117 @@
+# Computer Science Agent Pack
+
+38 rigorous agent personas for software development and computer science research, generated for both **Claude Code** (subagents) and **Kilo Code** (custom modes) from one source.
+
+Every agent shares a rigor protocol: evidence over assertion, VERIFIED / REASONED / ASSUMED labels on conclusions, no invented results or citations, and stopping instead of breaking a hard rule.
+
+## Install: Claude Code
+
+Copy the agent files into one of these folders:
+
+- Project-level (shared with your team via git): `<repo>/.claude/agents/`
+- User-level (all your projects): `~/.claude/agents/`
+
+```bash
+mkdir -p .claude/agents
+cp claude-code/agents/*.md .claude/agents/
+```
+
+Then run `/agents` inside Claude Code to confirm they loaded. Invoke explicitly ("Use the debugger agent to find why test_parse fails") or let Claude delegate automatically based on each agent's description. `debugger`, `tester`, and `code-reviewer` are marked to be used proactively.
+
+Tool access is scoped per agent: reviewers and auditors are read-only or read + Bash, builders get Write/Edit/Bash, research agents get WebSearch/WebFetch. `tech-lead` inherits all tools. Change the `tools:` and `model:` lines to suit your setup.
+
+## Install: Kilo Code
+
+- Project-level: rename `kilo-code/kilocodemodes.yaml` to `.kilocodemodes` in your repo root.
+- Global: merge the `customModes:` list into your global `custom_modes.yaml` (Modes view > Edit Global Modes).
+
+Restricted modes use `fileRegex` so, for example, `tester` can only edit test files and `technical-writer` can only edit docs. Loosen these in the `groups:` section if needed.
+
+## Suggested pairings (builder + adversary)
+
+- `autonomous-developer` → `tester` → `code-reviewer`
+- `architect` → `red-teamer`
+- `algorithmist` → `mathematician` or `complexity-theorist`
+- `formal-methods-engineer` → `logician`
+- `experimentalist` → `statistician` → `reproducibility-officer`
+- paper draft → `reviewer-2` → `technical-writer`
+- `tech-lead` to plan and gate a whole pipeline
+
+## Agents
+
+### Builders
+
+| Agent | Slug | Model | Purpose |
+| --- | --- | --- | --- |
+| 🛠️ Autonomous Developer | `autonomous-developer` | inherit | Takes a ticket end to end: plan, implement, test, summarize. |
+| 🏛️ Architect | `architect` | opus | Designs systems around boundaries, tradeoffs, and failure modes. |
+| ⚡ Prototyper | `prototyper` | sonnet | Answers 'is this even possible?' fast, and labels every shortcut. |
+| 🪚 Craftsman | `craftsman` | sonnet | Behavior-preserving refactoring toward clear, idiomatic code. |
+| 🔌 API Designer | `api-designer` | sonnet | Designs interfaces as promises to strangers. |
+
+### Investigators
+
+| Agent | Slug | Model | Purpose |
+| --- | --- | --- | --- |
+| 🔍 Debugger | `debugger` | opus | Scientific-method debugging. No fix without a demonstrated cause. |
+| 🧾 Forensic Analyst | `forensic-analyst` | sonnet | Reconstructs incidents from logs, traces, and dumps; writes blameless postmortems. |
+| 🏎️ Performance Engineer | `performance-engineer` | sonnet | Measure first. Profiles, sound benchmarks, and statistically honest speedups. |
+| 🧵 Concurrency Specialist | `concurrency-specialist` | opus | Treats every shared variable as a race until proven otherwise. |
+| 🏺 Code Archaeologist | `archaeologist` | sonnet | Explains why legacy code is the way it is before anyone deletes it. |
+
+### Rigor & Mathematics
+
+| Agent | Slug | Model | Purpose |
+| --- | --- | --- | --- |
+| ∑ Mathematician | `mathematician` | opus | Definitions first. Invariants, pre/postconditions, and real proofs. |
+| 📐 Formal Methods Engineer | `formal-methods-engineer` | opus | Models designs in TLA+, Alloy, Dafny, Lean, or Coq and lets the checker find bugs. |
+| ♾️ Complexity Theorist | `complexity-theorist` | opus | Classifies problems, finds reductions, and knows when to stop searching for exact answers. |
+| 🧮 Algorithmist | `algorithmist` | opus | Maps new problems onto known algorithms and picks data structures from access patterns. |
+| 🔢 Numerical Analyst | `numerical-analyst` | opus | Distrusts floating point on principle and rewrites computations stably. |
+| ⚖️ Logician | `logician` | opus | Audits reasoning itself: hidden premises, fallacies, and invalid conclusions. |
+
+### Adversaries
+
+| Agent | Slug | Model | Purpose |
+| --- | --- | --- | --- |
+| 🧪 Tester | `tester` | sonnet | Assumes every feature is broken. Unit, property-based, and mutation testing. |
+| 🌪️ Chaos Engineer | `chaos-engineer` | sonnet | Injects failures in controlled experiments to prove resilience. |
+| 🎯 Red Teamer | `red-teamer` | opus | Argues the plan will fail and steelmans the alternatives. |
+| 🛡️ Security Auditor | `security-auditor` | opus | Threat-models and audits code for vulnerabilities, defensively. |
+| 🐒 Fuzzer | `fuzzer` | sonnet | Builds fuzz harnesses and feeds parsers malformed input until they break. |
+| 🧐 Code Reviewer | `code-reviewer` | sonnet | Strict review: correctness first, failure paths always, nitpicks labeled. |
+
+### Operations & Stewardship
+
+| Agent | Slug | Model | Purpose |
+| --- | --- | --- | --- |
+| 📟 Site Reliability Engineer | `sre` | sonnet | SLOs, observability, alerts, runbooks, and safe rollouts. |
+| 🔁 DevOps Engineer | `devops-engineer` | sonnet | CI/CD, reproducible builds, containers, and infrastructure as code. |
+| 📦 Dependency Steward | `dependency-steward` | haiku | Audits dependencies for vulnerabilities, abandonment, licenses, and bloat. |
+| 🗄️ Data Engineer | `data-engineer` | sonnet | Schemas, migrations, query plans, isolation levels, and data quality. |
+
+### Research & Academia
+
+| Agent | Slug | Model | Purpose |
+| --- | --- | --- | --- |
+| 🎓 Principal Investigator | `principal-investigator` | opus | Sharpens research questions for importance, novelty, and feasibility. |
+| 🔬 Experimentalist | `experimentalist` | sonnet | Pre-registers hypotheses, baselines, and ablations before running anything. |
+| 📊 Statistician | `statistician` | opus | Effect sizes, confidence intervals, seed variance, and no p-hacking. |
+| ♻️ Reproducibility Officer | `reproducibility-officer` | sonnet | If it can't be rerun from scratch, it doesn't count. |
+| 📝 Reviewer 2 | `reviewer-2` | opus | The skeptical program committee member your paper needs before submission. |
+| 📚 Librarian | `librarian` | sonnet | Surveys related work with verifiable citations only. |
+| ✒️ Technical Writer | `technical-writer` | sonnet | Consistent definitions, notation, and structure; cuts what doesn't serve the argument. |
+| 🧰 Research Engineer | `research-engineer` | sonnet | Turns notebook prototypes into tested, modular code without changing the numbers. |
+
+### Teaching & Coordination
+
+| Agent | Slug | Model | Purpose |
+| --- | --- | --- | --- |
+| 🦉 Socratic Tutor | `socratic-tutor` | sonnet | Teaches CS fundamentals through questions, not answers. |
+| 🧭 Mentor | `mentor` | sonnet | Reviews work and teaches the principle behind every suggestion. |
+| 🎼 Tech Lead | `tech-lead` | opus | Orchestrates the other agents and gates progress on evidence. |
+| 🪶 Scribe | `scribe` | haiku | Records decisions, ADRs, changelogs, and meeting outcomes. |
+
+## Customizing
+
+Edit `agents_data.py` (included in `source/`) and run `python build.py` to regenerate both formats. Requires PyYAML.
