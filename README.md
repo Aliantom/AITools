@@ -31,6 +31,8 @@ This repo collects what actually works when using AI assistants (mostly Claude a
 | Make an agent's output precise instead of vague | [Mathematical constraints](Mathematical-constraints) |
 | Generate architecture diagrams that render in GitLab | [AI-generated architecture diagrams](ai-generated-architecture-diagrams%20%281%29.md) |
 | Run an agent unattended in a loop with guardrails | [run-agent-loop](run-agent-loop%20%281%29.md) |
+| Learn about self-improving AI (Darwin Gödel Machine and relatives) | [Self-improving AI guide](guides/self-improving-ai/README.md) and its [reading list](guides/self-improving-ai/reading-list.md) |
+| Turn a stack of research papers into designs for my own project | [Research-to-project analysis prompt](prompts/patterns/research-to-project-analysis.md) |
 
 ---
 
@@ -45,6 +47,7 @@ Long-form, opinionated write-ups on a single topic.
 | [**Prompting Claude Code**](prompting-claude-code.md) | Context engineering, CLAUDE.md, subagents, hooks, skills, MCP vs CLI tradeoffs, Explore→Plan→Code→Commit, TDD loops, headless mode, permissions and safety, ten task-specific prompt templates (bug fix, feature, refactor, review, migration, incident…), anti-patterns, model selection and cost control. | Anyone using Claude Code daily. The most complete document in the repo. |
 | [**AI-Generated Architecture Diagrams for GitLab**](ai-generated-architecture-diagrams%20%281%29.md) | Why Mermaid wins for GitLab, why one mega-diagram fails (including GitLab's 5,000-character Mermaid limit), layered per-level diagram files with a routing index, and legend tables keyed to node IDs. | Turning a large codebase or context dump into diagrams both humans and AI can read. |
 | [**Mathematical Constraints for Agents**](Mathematical-constraints) | Using complexity bounds, pre/postconditions (Hoare logic), queueing theory and Little's Law, workload distributions, and information theory to constrain what an agent generates, with storage-systems examples and a plain-language B+tree explainer. | Engineers who want precise, checkable specs instead of "make it fast." |
+| [**Self-Improving AI**](guides/self-improving-ai/README.md) | The research on systems that improve themselves: Gödel Machine → Darwin Gödel Machine → Huxley-Gödel Machine and Hyperagents, plus SICA, ADAS, AlphaEvolve-style code evolution (OpenEvolve, ShinkaEvolve), self-training (STaR, SEAL) and open-endedness. Covers which methods work with API-only vs. open-weight models, how to split roles across models, and where to start. Includes a verified [reading list](guides/self-improving-ai/reading-list.md) of ~30 papers and repos. | Anyone planning to build a self-improving agent loop or just get oriented in the field. |
 
 ### 🎭 System prompts and personas
 
@@ -53,6 +56,20 @@ Drop-in roles that change how a model approaches a task.
 | Resource | What it does | How to use |
 | --- | --- | --- |
 | [**UX/UI Architect Prime**](UX-UI%20Architect%20Prime) | A website redesign auditor grounded in Apple's HIG, Gestalt, Fitts's, Hick's and Miller's laws, and grid systems. Works in three phases (friction audit → user journey → fine-detail spec) and forces every recommendation into *Observation / Principle / Solution / Expected Impact*. Pushes back when a request contradicts proven design principles. | Paste as a system prompt or Claude Project instructions, then give it a URL, screenshot or page description. |
+
+### 🧩 Prompt patterns
+
+Reusable task templates you fill in and paste.
+
+| Resource | What it does | How to use |
+| --- | --- | --- |
+| [**Research-to-Project Analysis**](prompts/patterns/research-to-project-analysis.md) | Has a model deep-read a set of research papers in phases (clarify → per-paper extraction cards → cross-paper synthesis → fit to your project → tailored designs → weekend prototype plan). Every claim is labeled [PAPER] / [INFERRED] / [UNKNOWN], and the evaluator is treated as the central design question. | Fill in the MY PROJECT section, attach the PDFs, and run one phase at a time. Best in Claude Code inside the target repo. |
+
+### 📋 Cheatsheets
+
+| Resource | What it is |
+| --- | --- |
+| [**Self-Improving AI: Discord Paste**](cheatsheets/self-improving-ai-discord.md) | The self-improving AI reading list formatted for a single Discord message, with link previews suppressed. |
 
 ### 🤖 Agent packs
 
@@ -124,7 +141,7 @@ AITools/
 
 Ideas queued for the collection:
 
-- [ ] Reorganize existing files into the folder layout above and give every file a `.md` extension
+- [ ] Reorganize existing files into the folder layout above and give every file a `.md` extension (new entries already use `guides/`, `prompts/patterns/` and `cheatsheets/`)
 - [ ] Commit the CS Agent Pack's agent files and Kilo Code modes
 - [ ] Prompt pattern library: one file per reusable task template
 - [ ] CLAUDE.md starter templates for common project types
