@@ -7,6 +7,27 @@
 
 Newest entry first. Each entry: what was asked, what was done, what was found, what changed, what is open. When a later entry answers an open question, say so and link the note that holds the answer.
 
+## 2026-11-04 (evening): second pass, deep dives and the first experiment
+
+**Asked.** Run the KL test on gemma4:12b quants; go deeper on every requested topic; find repos; connect quantization with AI-ingestible diagramming and reasoning maps.
+
+**Done.** Sixteen more searches (S51 to S111 in [Quantization sources](quantization-sources.md)); nine new notes (calibration, mixed precision, outliers and rotation, rounding, distillation and low-bit QAT, quantized fine-tuning, reasoning models, MoE and multimodal, serving and speculative decoding); experiment 001 pre-registered with scripts in `experiments/`; a sibling research folder "AI diagramming and reasoning maps" started and mirrored to AITools.
+
+**Experiment 001 status.** Downloads started (Unsloth BF16, UD-Q4_K_XL, QAT UD-Q4_K_XL; wikitext and ultrachat parquet). Building llama.cpp with CUDA was refused by the session's permission mode; the owner runs the one-line build in the experiment note, then the runner. No result yet.
+
+**New findings worth keeping.**
+- Calibration saturates at about 128 × 2048 tokens; domain match beats volume; evaluate elsewhere. (S55, S59)
+- Scalar Hessian proxies rank layer sensitivity poorly; output-error and Shapley-style measures do better; early layers are usually the sensitive ones. (S61, S62, S64)
+- Rotation does nearly all the work in rotation-plus-codebook methods; ParoQuant brings it to AWQ speed. (S31, S99)
+- ParetoQ: learning transition between 2 and 3 bits; QAT share should grow with compute; sub-4-bit can beat 4-bit at equal size. Over-trained models quantize worse. (S67, S68)
+- Reasoning models: W4A16 and KV8 safe, 3-bit risky, aggressive quantization lengthens outputs of small models; Qwen3-14B loses 1% MMLU at GPTQ-4 while 0.6B loses 10%. (S52, S51)
+- Uploaders are within about 6% at the same quant type; Unsloth's XL mixes are the real edge. (S94, S95)
+- EXL3 beats GGUF under 4 bpw, loses above 5. (S97, S98)
+- Gemma 4 ships an MTP draft that Ollama already uses; speculative decoding is free here. (S108, local manifest)
+- MoE: expert-level allocation by activation importance is the way qwen3:30b-a3b could fit this card. (S85, S86)
+
+**Open questions carried forward.** Items 1 to 10 from the first entry remain except 7 (ParetoQ read at abstract level) and 8 (survey located, S79). Added: 11. Measure per-tensor-type sensitivity of gemma-4-12b (mixed-precision note, section 5). 12. KL-test an Unsloth 2-bit-expert quant of qwen3:30b-a3b. 13. Merge-loss KL for the next finetune-lab run. 14. Verify Ollama's flash-attention default on the installed version. 15. Read the 2606.00206 "think longer" paper and QuantLRM.
+
 ## 2026-11-04: first pass (Claude Code, Fable 5.1)
 
 **Asked.** How quantization applies to AI; current and bleeding-edge methods; how an end user optimizes it; research, repos and guidelines; PTQ and QAT; and the meaning of a list of terms (non-uniform, mixed precision, per-channel vs per-tensor, group, calibration, uniform, LSQ, AdaRound, bias correction, cross-layer equalization, outlier channel splitting, distillation-assisted, batch-norm folding).

@@ -56,3 +56,28 @@ Status column is as of 2026-11-04 and mixes what the sources said (VERIFIED) wit
 - Fine-tuning: Unsloth with bitsandbytes NF4, under the finetune-lab guard.
 - Serving beyond Ollama: not yet installed; vLLM with AWQ would be the choice if needed.
 - Nothing above should be installed without the tool-gatekeeper check and a named role.
+
+## Curated lists (added 2026-11-04 evening)
+
+| List | What it covers | Label |
+|---|---|---|
+| [Kai-Liu001/Awesome-Model-Quantization](https://github.com/Kai-Liu001/Awesome-Model-Quantization) | Low-bit papers 2020 to 2026 from top venues with code links; ICLR 2026 (ParoQuant, AnyBCQ, PT²-LLM) and ICML 2026 (SINQ, WUSH, NeUQI) entries | S71 |
+| [JunHoo-Lee/Awesome-Model-Quantization](https://github.com/JunHoo-Lee/Awesome-Model-Quantization) (mirrored as AI-Efficiency/...) | Papers, benchmarks, surveys, toolkits table; LLM, multimodal, VQ and lattice | S72 |
+| [LumosJiang/Awesome-On-Device-LLMs](https://github.com/LumosJiang/Awesome-On-Device-LLMs) | On-device compression and deployment; tied to a 2026 survey | S73 |
+| [pprp/Awesome-LLM-Quantization](https://github.com/pprp/Awesome-LLM-Quantization) | Older LLM list | S74 |
+| [ziniv/Awesome-Efficient-LLM](https://github.com/ziniv/Awesome-Efficient-LLM) | Broader efficiency, includes efficient reasoning | S75 |
+| [A Survey of Low-bit LLMs (arXiv 2409.16694)](https://arxiv.org/pdf/2409.16694) | The *Neural Networks* 2025 survey: basics, systems, algorithms | S79 |
+
+## Repos found in the second pass
+
+| Repo | What | Runs here? | Label |
+|---|---|---|---|
+| [facebookresearch/ParetoQ](https://github.com/facebookresearch/ParetoQ) | Training code for 1 to 4 bit QAT with per-bit quantizers | Small models only | S67 |
+| [DD-DuDa/BitDistiller](https://github.com/DD-DuDa/BitDistiller) | Self-distillation QAT for sub-4-bit | Small models only | S76 |
+| [z-lab/paroquant](https://github.com/z-lab/paroquant) | Pairwise-rotation weight quantization with NVIDIA and Apple kernels | Yes (CUDA) | S99 |
+| [AI-Efficiency/Qwen3-Quantization-Toolkit](https://github.com/AI-Efficiency/Qwen3-Quantization-Toolkit) | Scripts and tables from the Qwen3 study | Yes | S110 |
+| [ModelCloud/GPTQModel](https://github.com/modelcloud/gptqmodel) | GPTQ and related methods, many backends | Yes (Marlin) | MEMORY, listed in S71 search |
+| SINQ (paper code, see arXiv 2509.22944) | Calibration-free dual-scale quantizer | Likely | S101 |
+| TuneQn, onnx-analyzer, quantize-rs | Per-layer error analysis and visualization for ONNX models | CPU tools | S109 |
+| [OnlyTerp/turboquant](https://github.com/OnlyTerp/turboquant) | Unofficial TurboQuant KV | Research | S42 |
+| Experiment scripts in this folder (`experiments/`) | KL test pipeline for GGUF quants on this PC | Yes | local |

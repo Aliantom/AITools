@@ -97,3 +97,15 @@ FLUX.1-class models at INT4 through Nunchaku (SVDQuant) fit the card with memory
 - Do not calibrate and evaluate on the same text.
 - Do not run two models at once; the vault's single-model rule exists because weights reload on every switch.
 - Do not go below IQ3 for anything that must reason, code or follow long instructions.
+
+## 10. Updates from the second pass (2026-11-04 evening)
+
+- **Calibration defaults:** 128 sequences of 2048 tokens, domain-matched, disjoint from evaluation. More samples do not help and can hurt. ([Quantization calibration deep dive](quantization-calibration-deep-dive.md))
+- **Uploader choice matters less than type:** at the same quant type, Unsloth, bartowski and mradermacher land within about 6% of each other on KL; Unsloth's edge is in the XL mixes (Q4_K_XL 0.0137 vs Q4_K_M 0.018 to 0.019 on Qwen3.5-27B). Pick UD-*_XL when it exists, otherwise any imatrix quant. (S94, S95)
+- **Flash attention:** Ollama 0.30 and later reportedly turn it on by default for modern architectures on Ampere; `OLLAMA_KV_CACHE_TYPE=q8_0` still has to be set, and an unsupported architecture silently falls back to f16. Check `ollama ps` memory to confirm the cache shrank. (S106)
+- **KV q8_0 cost:** perplexity delta within 0.1% of f16 across 4k to 32k context in one measured guide; decode speed can drop (one measurement: 56% of f16 speed at 64k context). Measure both here before making it the default for night-shift throughput jobs. (S92)
+- **Reasoning workers:** W4A16 and 8-bit KV are safe; 3-bit is not; watch for longer outputs as a damage symptom. ([Quantization and reasoning models](quantization-and-reasoning-models.md))
+- **Gemma 4's draft model:** Ollama's `gemma4:12b` already carries a 443 MiB multi-token-prediction draft; speculative decoding is on without extra work. ([Quantization serving kernels and speculative decoding](quantization-serving-kernels-and-speculative-decoding.md))
+- **Sub-4-bit option:** EXL3 beats GGUF under 4 bpw; GGUF custom mixes win above 5. Only relevant if a 20B-class dense model is wanted on this card. (S97, S98)
+- **qwen3:30b-a3b:** the installed Q4 spills to swap; an Unsloth UD 2-bit-expert mix (about 10 to 11 GB) is the only fit, chat-grade; test by KL first. ([Quantization of MoE and multimodal models](quantization-of-moe-and-multimodal-models.md))
+- **The measured answer** for gemma4:12b is pending in [Quantization KL experiment 001 (gemma4 12b)](quantization-kl-experiment-001-gemma4-12b.md).

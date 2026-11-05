@@ -102,3 +102,69 @@ Ids (S1, S2, ...) are what the other notes cite.
 | Marlin kernel (arXiv 2408.11743) | Fast INT4×FP16 GEMM on Ampere | Serving path | MEMORY |
 | Gemma 3 QAT (Google blog, Apr 2025); gpt-oss model card (Aug 2025) | Vendor QAT checkpoints; MXFP4 release format | QAT, formats | MEMORY |
 | Repos: ggml-org/llama.cpp, ModelCloud/GPTQModel, vllm-project/llm-compressor, pytorch/ao, quic/aimet, NVIDIA/TensorRT-Model-Optimizer, intel/auto-round, mobiusml/hqq, turboderp-org/exllamav3, bitsandbytes-foundation/bitsandbytes, unslothai/unsloth, mit-han-lab/nunchaku, mit-han-lab/deepcompressor, spcl/QuaRot, facebookresearch/SpinQuant, EleutherAI/lm-evaluation-harness | Tooling | Tools note | MEMORY |
+
+## Second pass, 2026-11-04 evening (deep dives, KL experiment setup)
+
+| Id | Source | Type | Date | Used for | Label |
+|---|---|---|---|---|---|
+| S51 | [An Empirical Study of Qwen3 Quantization (arXiv 2505.02214; Springer 2026)](https://arxiv.org/html/2505.02214v1) | paper | 2025/26 | Per-size degradation, 3-bit cliff, Qwen3 vs LLaMA-3 | SUMMARY |
+| S52 | [Quantization Hurts Reasoning? (arXiv 2504.04823 v2)](https://arxiv.org/html/2504.04823v2) | paper | Aug 2025 | W4A16/W8A8 lossless, 3-bit risky, output length, KV4, AWQ over GPTQ | SUMMARY |
+| S53 | [Quantized Reasoning Models Think They Need to Think Longer, but They Do Not (arXiv 2606.00206)](https://arxiv.org/pdf/2606.00206) | paper | Jun 2026 | Title only | TITLE |
+| S54 | [QuantLRM (arXiv 2602.02581)](https://arxiv.org/pdf/2602.02581) | paper | Feb 2026 | Title only | TITLE |
+| S55 | [Preserving LLM Capabilities through Calibration Data Curation (arXiv 2510.10618)](https://arxiv.org/pdf/2510.10618) | paper | Oct 2025 | Sample count, length, curation | SUMMARY |
+| S56 | [GPTQ as Babai's Nearest Plane Algorithm (arXiv 2507.18553)](https://arxiv.org/pdf/2507.18553) | paper | Jul 2025 | GPTQ theory | TITLE |
+| S57 | [NeUQI (arXiv 2505.17595)](https://arxiv.org/pdf/2505.17595) | paper | 2025 | Grid initialization | TITLE |
+| S58 | [LLMC benchmark toolkit (arXiv 2405.06001)](https://arxiv.org/pdf/2405.06001) | paper | 2024 | Calibration domain effect | SUMMARY |
+| S59 | [Calibration-data study (arXiv 2409.11055 v6)](https://arxiv.org/pdf/2409.11055) | paper | Jun 2025 | 128-sample plateau, degradation under 64 | SUMMARY |
+| S60 | [Hands-on GPTQ (apxml course)](https://apxml.com/courses/practical-llm-quantization/chapter-3-advanced-ptq-techniques/practice-gptq) | course | 2025 | Defaults | SECONDARY |
+| S61 | [CoopQ / SPQE (arXiv 2509.15455; ACL 2026 Findings)](https://arxiv.org/pdf/2509.15455) | paper | 2025/26 | Shapley sensitivity, sub-4-bit failure of scalar metrics | SUMMARY |
+| S62 | [CASA: activation-aware mixed precision with cross-layer refinement (arXiv 2609.25916)](https://arxiv.org/abs/2609.25916v1) | paper | Sep 2026 | Knapsack formulation, scalar-proxy critique | SUMMARY |
+| S63 | [KVTuner (ICML 2025)](https://icml.cc/virtual/2025/poster/43487) | paper | 2025 | 3.25-bit mixed KV | SUMMARY |
+| S64 | [MXSens (arXiv 2607.17733)](https://arxiv.org/html/2607.17733v1) | paper | Jul 2026 | Early-layer sensitivity, per-column bits | SUMMARY |
+| S65 | [Beyond Outliers: data-free layer-wise mixed precision, NSDS (arXiv 2603.17354)](https://arxiv.org/pdf/2603.17354) | paper | Mar 2026 | Calibration-free sensitivity | SUMMARY |
+| S66 | [MixLLM (MLSys 2026 oral)](https://mlsys.org/virtual/2026/oral/3805) | paper | 2026 | Global per-output-feature precision | SUMMARY |
+| S67 | [ParetoQ (arXiv 2502.02631)](https://arxiv.org/abs/2502.02631) and [facebookresearch/ParetoQ](https://github.com/facebookresearch/ParetoQ) | paper, repo | 2025 | 2-to-3-bit transition, QAT budget law, 1.58-bit result | SUMMARY |
+| S68 | [Low-Bit Quantization Favors Undertrained LLMs (arXiv 2411.17691)](https://arxiv.org/pdf/2411.17691) | paper | Nov 2024 | Over-training makes quantization harder | TITLE |
+| S69 | [Statistically-Lossless Quantization of LLMs (arXiv 2605.02404)](https://arxiv.org/pdf/2605.02404) | paper | May 2026 | Title only | TITLE |
+| S70 | [ParetoQ summary (hychiang)](https://hychiang.info/blog/2025/paretoq-summary/) | blog | 2025 | Cross-check | SECONDARY |
+| S71 | [Kai-Liu001/Awesome-Model-Quantization](https://github.com/Kai-Liu001/Awesome-Model-Quantization) | list | 2026 | 2020 to 2026 top-venue papers with code | SUMMARY |
+| S72 | [JunHoo-Lee/Awesome-Model-Quantization](https://github.com/JunHoo-Lee/Awesome-Model-Quantization) | list | 2026 | Toolkits table, 2026 section | SUMMARY |
+| S73 | [LumosJiang/Awesome-On-Device-LLMs](https://github.com/LumosJiang/Awesome-On-Device-LLMs) | list | 2026 | On-device compression | SUMMARY |
+| S74 | [pprp/Awesome-LLM-Quantization](https://github.com/pprp/Awesome-LLM-Quantization) | list | 2024/25 | Older list | TITLE |
+| S75 | [ziniv/Awesome-Efficient-LLM](https://github.com/ziniv/Awesome-Efficient-LLM) | list | 2025 | Broader efficiency | TITLE |
+| S76 | [BitDistiller (ACL 2024; arXiv 2402.10631)](https://arxiv.org/pdf/2402.10631) and [DD-DuDa/BitDistiller](https://github.com/DD-DuDa/BitDistiller) | paper, repo | 2024 | Self-distillation QAT, 2-bit MMLU figure (third-party) | SUMMARY |
+| S77 | [UPQ: block-wise PTQ then distillation QAT to INT2 (arXiv 2506.09104)](https://arxiv.org/pdf/2506.09104) | paper | Jun 2025 | Two-stage recipe | SUMMARY |
+| S78 | [EdgeRazor (arXiv 2605.04062)](https://arxiv.org/pdf/2605.04062) | paper | May 2026 | Title only | TITLE |
+| S79 | [A Survey of Low-bit LLMs: Basics, Systems, and Algorithms (arXiv 2409.16694)](https://arxiv.org/pdf/2409.16694) | survey | 2024/25 | The Neural Networks survey, located | TITLE |
+| S80 | [LoftQ (arXiv 2310.08659)](https://arxiv.org/html/2310.08659) | paper | 2023 | Init, 2-bit result; summaries also cover QA-LoRA, LQ-LoRA | SUMMARY |
+| S81 | [Scale-QLoRA: code-invariant adapter merging for MXFP4 (arXiv 2609.04526)](https://arxiv.org/pdf/2609.04526) | paper | Sep 2026 | Merge loss numbers | SUMMARY |
+| S82 | [LQER (arXiv 2402.02446)](https://arxiv.org/pdf/2402.02446) | paper | 2024 | Low-rank error reconstruction | TITLE |
+| S83 | [LoRA comprehensive review (arXiv 2501.00365)](https://arxiv.org/pdf/2501.00365) | review | 2025 | Background | TITLE |
+| S84 | [Low-Rank Adaptation Redux (arXiv 2604.21905)](https://arxiv.org/pdf/2604.21905) | paper | Apr 2026 | Background | TITLE |
+| S85 | [GEMQ: global expert-level mixed precision for MoE (arXiv 2605.23078)](https://arxiv.org/pdf/2605.23078) | paper | May 2026 | Qwen3-30B-A3B architecture, allocation | SUMMARY |
+| S86 | [BitsMoE (arXiv 2606.00079)](https://arxiv.org/pdf/2606.00079) | paper | Jun 2026 | 2-bit ablation 47% vs 25% | SUMMARY |
+| S87 | [TileQ (arXiv 2605.09281)](https://arxiv.org/pdf/2605.09281) | paper | May 2026 | Low-rank overhead | SUMMARY |
+| S88 | [MODE: modality-decomposed expert-level quantization (arXiv 2606.17118)](https://arxiv.org/pdf/2606.17118) | paper | Jun 2026 | Multimodal MoE | SUMMARY |
+| S89 | [llama-quantize(1) manpage](https://manpages.debian.org/unstable/llama.cpp-tools/llama-quantize.1.en.html) | docs | 2026 | --tensor-type, --tensor-type-file | SUMMARY |
+| S90 | [llama.cpp discussion #12741: custom quants with --tensor-type](https://github.com/ggml-org/llama.cpp/discussions/12741) | discussion | 2025 | Mixed recipes, MSD threshold about 0.1 | SUMMARY |
+| S91 | [llama.cpp issue #22544: --tensor-type ignored when equal to global type](https://github.com/ggml-org/llama.cpp/issues/22544) | issue | 2026 | Known bug | SUMMARY |
+| S92 | [llama.cpp KV cache quantization guide, measured (sotaaz)](https://sotaaz.com/post/llamacpp-kv-cache-quantization-guide-en) | blog | 2026 | q8_0 perplexity delta, speed cost | SUMMARY |
+| S93 | [KV cache Q4 vs Q8 in llama.cpp (bmdpat)](https://bmdpat.com/blog/kv-cache-q4-vs-q8-in-llama-cpp-explained-2026) | blog | 2026 | Background | SECONDARY |
+| S94 | [Qwen 3.5 27B GGUF quality benchmark: five uploaders by KL (localbench)](https://localbench.substack.com/p/qwen-3-5-27b-gguf-quality-benchmark) | benchmark | 2026 | Uploaders within 6% at same type | SUMMARY |
+| S95 | [Hacker News thread on Unsloth Dynamic 2.0 vs bartowski](https://news.ycombinator.com/item?id=47192505) | thread | 2026 | Q4_K_M 0.0192 vs 0.0182; XL 0.0137 | SUMMARY |
+| S96 | [ubergarm: early exllamav3 EXL3 quants (gist)](https://gist.github.com/ubergarm/9d560bab80241b90dac802e91b656743) | gist | 2025 | EXL3 practice | SUMMARY |
+| S97 | [ExLlamaV3 vs llama.cpp with a 27B on 16 GB (efraingaray)](https://efraingaray.com/en/blog/exllamav3-vs-llamacpp-16gb/) | blog | 2026 | KL at 3 and 3.5 bpw vs GGUF | SUMMARY |
+| S98 | [EXL3 vs GGUF: quality, speed and VRAM (atomic.chat)](https://atomic.chat/blog/guides/exl3-vs-gguf) | guide | 2026 | 4.0 bpw KL comparison, effective bpw | SUMMARY |
+| S99 | [ParoQuant (ICLR 2026; arXiv 2511.10645)](https://arxiv.org/pdf/2511.10645) and [z-lab/paroquant](https://github.com/z-lab/paroquant) | paper, repo | 2025/26 | Pairwise rotations, +2.4% over AWQ | SUMMARY |
+| S100 | [AnyBCQ (ICLR 2026)](https://mlanthology.org/iclr/2026/park2026iclr-anybcq/) | paper | 2026 | Multi-precision binary-coded | SUMMARY |
+| S101 | [SINQ: Sinkhorn-normalized calibration-free quantization (arXiv 2509.22944)](https://arxiv.org/abs/2509.22944) | paper | Sep 2025 | Dual-axis scales | SUMMARY |
+| S102 | [Speculative Decoding Meets Quantization (arXiv 2505.22179)](https://arxiv.org/pdf/2505.22179) | paper | May 2025 | Compatibility, hierarchical design | SUMMARY |
+| S103 | [SD2: Self-Distilled Sparse Drafters (arXiv 2504.08838)](https://arxiv.org/html/2504.08838v2) | paper | 2025 | 2:4 vs unstructured drafts | SUMMARY |
+| S104 | [Quasar: quantized self-speculative acceleration (arXiv 2603.01399)](https://www.alphaxiv.org/abs/2603.01399.md) | paper | Mar 2026 | Quantized verification | SUMMARY |
+| S105 | [ML-SpecQD (arXiv 2503.13565)](https://arxiv.org/abs/2503.13565v1) | paper | 2025 | MXFP4 drafts 2.72× | SUMMARY |
+| S106 | [KV cache quantization in Ollama and llama.cpp (llmhardware)](https://llmhardware.io/guides/kv-cache-quantization-ollama-llama-cpp) and [smcleod: bringing K/V quantisation to Ollama](https://smcleod.net/2024/12/bringing-k/v-context-quantisation-to-ollama/) | guides | 2024/26 | Env vars, fallbacks, flash-attention default from 0.30 | SUMMARY |
+| S107 | [bartowski/gemma-4-12B-it-GGUF](https://huggingface.co/bartowski/gemma-4-12B-it-GGUF) | model repo | 2026 | imatrix on calibration_datav3 | SUMMARY |
+| S108 | [unsloth/gemma-4-12b-it-GGUF](https://huggingface.co/unsloth/gemma-4-12b-it-GGUF) and [unsloth/gemma-4-12B-it-qat-GGUF](https://huggingface.co/unsloth/gemma-4-12B-it-qat-GGUF) | model repos | 2026 | File list and sizes read through the HF API on this PC | LOCAL |
+| S109 | [TuneQn: sensitivity-driven selective ONNX quantization (arXiv 2507.12196)](https://arxiv.org/pdf/2507.12196) and [onnx-analyzer](https://gh.r-mj.com/dwithchenna/onnx-analyzer) | paper, tool | 2025 | Per-layer error visualization | SUMMARY |
+| S110 | [AI-Efficiency/Qwen3-Quantization-Toolkit](https://github.com/AI-Efficiency/Qwen3-Quantization-Toolkit) | repo | 2025 | Published tables | SUMMARY |
+| S111 | [Unsloth: Gemma 4, how to run locally](https://unsloth.ai/docs/models/gemma-4) | docs | 2026 | Recommended UD quant | SUMMARY |

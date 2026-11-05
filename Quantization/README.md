@@ -24,6 +24,16 @@ A trained model stores every weight as a 16-bit float. Quantization stores each 
 | [Quantization playbook for the RTX 3080](quantization-playbook-for-the-rtx-3080.md) | What to do on this PC: quant choice by model size, VRAM budget, Ollama settings, llama.cpp commands, evaluation protocol, fine-tuning path. |
 | [Quantization tools and repos](quantization-tools-and-repos.md) | Every library and repo, what it is for, its status, and whether it runs on Ampere. |
 | [Quantization sources](quantization-sources.md) | The source register: every paper, doc and post used, with a URL and an evidence label. |
+| [Quantization KL experiment 001 (gemma4 12b)](quantization-kl-experiment-001-gemma4-12b.md) | The first measured test on this PC: pre-registration, scripts (`experiments/`), status and results. |
+| [Quantization calibration deep dive](quantization-calibration-deep-dive.md) | How much calibration data, how long, which domain, imatrix practice, activation calibration methods. |
+| [Quantization mixed precision and sensitivity](quantization-mixed-precision-and-sensitivity.md) | Measuring layer sensitivity, allocating bits, llama.cpp `--tensor-type`, KV and MoE variants. |
+| [Quantization outliers and rotation deep dive](quantization-outliers-and-rotation-deep-dive.md) | Where outliers come from and the fix lineage from channel splitting to learned rotations. |
+| [Quantization rounding methods deep dive](quantization-rounding-methods-deep-dive.md) | AdaRound to GPTQ to AutoRound; GPTQ as a lattice algorithm; which rounding for which bit-width. |
+| [Quantization distillation and low-bit QAT deep dive](quantization-distillation-and-low-bit-qat-deep-dive.md) | ParetoQ's findings, distillation losses, recipes, what is feasible on this card. |
+| [Quantization fine-tuning with quantized bases](quantization-fine-tuning-with-quantized-bases.md) | QLoRA, LoftQ, QA-LoRA, merge loss, and what finetune-lab should measure. |
+| [Quantization and reasoning models](quantization-and-reasoning-models.md) | What quantization does to thinking models and agent workers. |
+| [Quantization of MoE and multimodal models](quantization-of-moe-and-multimodal-models.md) | Expert-level mixed precision; how qwen3:30b-a3b could fit; vision towers. |
+| [Quantization serving kernels and speculative decoding](quantization-serving-kernels-and-speculative-decoding.md) | Fast paths on Ampere, EXL3 numbers, speculative decoding and Gemma 4's built-in draft. |
 | [Quantization research log](quantization-research-log.md) | Dated log of what was researched, what was found, and the open questions to pick up next. |
 
 ## Bottom line for this PC (RTX 3080, 10 GB, Ampere)
@@ -36,6 +46,10 @@ A trained model stores every weight as a 16-bit float. Quantization stores each 
 6. Quantization-aware training only matters at 4 bits and below. For fine-tuning here, QLoRA through Unsloth is the path.
 
 Details and the commands are in [Quantization playbook for the RTX 3080](quantization-playbook-for-the-rtx-3080.md).
+
+## Deep dives (second pass, 2026-11-04)
+
+The rows above from the KL experiment downward were added in the second pass. Each ends with a "what to do here" section so findings can be pulled straight into finetune-lab or the Ollama setup.
 
 ## How to add research
 
