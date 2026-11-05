@@ -18,7 +18,7 @@ declare -A CAND=(
   [UD-Q4_K_XL]="$MODELS/gemma-4-12b-it-UD-Q4_K_XL.gguf" [QAT-UD-Q4_K_XL]="$MODELS/gemma-4-12B-it-qat-UD-Q4_K_XL.gguf"
   [ollama-Q4_K_M]="$OLLAMA_BLOB"
 )
-ORDER="Q6_K Q5_K_M UD-Q4_K_XL Q4_K_M-imat ollama-Q4_K_M Q4_K_M IQ4_XS-imat Q3_K_M-imat QAT-UD-Q4_K_XL"
+ORDER=${ORDER:-"Q6_K Q5_K_M UD-Q4_K_XL Q4_K_M-imat ollama-Q4_K_M Q4_K_M IQ4_XS-imat Q3_K_M-imat QAT-UD-Q4_K_XL"}
 for slice in ${SLICES:-self code}; do
   f="$WORK/slice-$slice.txt"; R="$WORK/results-cpu-$slice"; mkdir -p "$R"; ref="$WORK/ref-cpu-$slice.kld"
   if [[ ! -s $ref ]]; then

@@ -19,7 +19,9 @@ Newest entry first. Each entry: what was asked, what was done, what was found, w
 5. Ollama's own blob behaves like an imatrix quant (close to Q4_K_M-imat, far from plain Q4_K_M), so hypothesis 4 ("Ollama uses no imatrix") is not supported.
 6. My chat slices used Gemma 3 markers and the tool does not parse special tokens; both fixed for run E.
 
-**Open.** 20. Run E: own-answers slice through the real template with the patched tool, CPU path. 21. Task-accuracy comparison of the top three quants (Q6_K will not fit beside a useful context; UD-Q4_K_XL vs installed blob vs Q4_K_M-imat) with the quant-eval bundle. 22. File the flash-attention numerical discrepancy upstream with the reproduction. 23. Decide whether a Q5_K_M (8.0 GB) is usable at all with the KV cache this PC needs.
+**Result (00:25).** In distribution (own answers, real template): Q6_K mean 0.032 / median 0.0036 / top-1 94.8%; UD-Q4_K_XL 0.074 / 0.0077 / 91.7%. Imatrix hypothesis strongly confirmed; the Ollama blob is an imatrix-class quant; KV q8_0 fine, q4_0 not; no model change yet. Full tables and hypothesis verdicts in the experiment note.
+
+**Open.** 20. Finish the own-answers slice for the other seven candidates on the same path (about 10 minutes each, GPU free) and re-measure the KV arm there. 20b. Old item 20 done (run F). own-answers slice through the real template with the patched tool, CPU path. 21. Task-accuracy comparison of the top three quants (Q6_K will not fit beside a useful context; UD-Q4_K_XL vs installed blob vs Q4_K_M-imat) with the quant-eval bundle. 22. File the flash-attention numerical discrepancy upstream with the reproduction. 23. Decide whether a Q5_K_M (8.0 GB) is usable at all with the KV cache this PC needs.
 
 ## 2026-11-04 (late evening): passes 2 to 4 before implementation
 
