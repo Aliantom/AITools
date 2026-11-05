@@ -18,7 +18,7 @@ Newest entry first. Each entry: what was asked, what was done, what was found, w
 - Ollama 0.40.10 here: flash attention auto-on for gemma4, KV cache still f16, no GGUF quantization on import, no imatrix in its quantizer; the Modelfile needs FROM, DRAFT and a second FROM (projector). Registry blob is 250 MiB larger than Unsloth's Q4_K_M, so the mixes differ.
 - Paper corrections: ParetoQ's 90/10 is one 125M experiment; GPTQ beats AWQ at 4-bit on every Qwen3 size; 4-bit KV is under 1% on 14B+ reasoners but 3-bit KV and W4A4 are not; blueprints help small models most on code but APO and template search sometimes hurt; DAG-Math's format is Edge, Parents, Node and correct answers are at most 80% closed.
 
-**Open.** 16. Confirm the projector FROM syntax on a scratch model. 17. Build the 30 to 50 item tool-call set (owner reviews). 18. Decide whether to install lm-eval or bfcl-eval (gatekeeper). 19. Read the rest of 2504.04823 (appendix past 100k chars) and DAG-Math's appendix for the checker rules.
+**Open.** 16. ~~Confirm the projector FROM syntax on a scratch model~~ (done 21:15: works; smoke tests pending). 17. Build the 30 to 50 item tool-call set (owner reviews). 18. Decide whether to install lm-eval or bfcl-eval (gatekeeper). 19. Read the rest of 2504.04823 (appendix past 100k chars) and DAG-Math's appendix for the checker rules.
 
 ## 2026-11-04 (evening): second pass, deep dives and the first experiment
 

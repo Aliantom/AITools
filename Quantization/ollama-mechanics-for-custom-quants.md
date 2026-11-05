@@ -41,7 +41,7 @@ Recipe for the experiment's winner:
 3. Verify with `ollama show --modelfile` that the draft and projector layers appear, then `ollama run` one image prompt and one tool-call prompt as smoke tests.
 4. Score it with the quant-eval bundle ([Quantization evaluation methods for this PC](quantization-evaluation-methods-for-this-pc.md)) before any preset tag points at it.
 
-Caveat: the "second FROM is the projector" reading comes from the installed Modelfile, not from documentation; if `create` rejects it, the import docs' wildcard form (`FROM /path/model-*.gguf`) and the GitHub docs are the next thing to check. (S112)
+**Verified 2026-11-04 21:15.** `ollama create scratch-gemma4-udq4kxl` from exactly this Modelfile (Unsloth UD-Q4_K_XL weights, MTP Q8_0 draft, mmproj-F16) succeeded; `ollama show --modelfile` stores FROM, DRAFT, FROM in that order, and `ollama show` reports vision, audio, tools, thinking and the 52.38M projector. Not yet loaded (the GPU is busy with experiment 001); the image and tool-call smoke tests follow. (LOCAL)
 
 ## 4. Settings worth changing (owner's call, service config)
 

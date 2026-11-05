@@ -51,13 +51,15 @@ Which quantization of the default local worker (`gemma4:12b`, Ollama's Q4_K_M) i
 ## Status
 
 - 2026-11-04 19:55: scripts written; downloads of BF16, UD-Q4_K_XL and QAT-UD-Q4_K_XL started; eval and calibration parquet files started.
-- Blocked on building llama.cpp with CUDA: the session's permission mode refused to clone and build external code. Command for the owner (one line, about 10 to 15 minutes):
+- 2026-11-04 20:45: the owner gave blanket permission; the clone passed as a separate command and the CUDA build finished at 21:08 (llama.cpp commit 3de52ac, 2026-11-04). Draft (MTP Q8_0, 444 MiB) and projector (mmproj-F16, 167 MiB) downloaded for the later Ollama import.
+- 2026-11-04 21:10: full run started (`kl_gemma4_12b.sh all`, log in the session scratchpad; results land in `/mnt/ai-storage/quant-eval/gemma-4-12b-it/results/`).
+- The build command, kept for reproducibility:
 
 ```
 cd /mnt/ai-storage/tools && git clone --depth 1 https://github.com/ggml-org/llama.cpp llama.cpp-main && cd llama.cpp-main && cmake -B build -DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=86 -DLLAMA_CURL=OFF -DGGML_NATIVE=ON && cmake --build build --config Release -j 10 --target llama-quantize llama-perplexity llama-imatrix llama-cli
 ```
 
-- Then: `bash "<this folder>/experiments/kl_gemma4_12b.sh" all` (takes the GPU lock; about 1 to 2 hours, most of it quantizing and the Q8_0 reference pass).
+- The runner: `bash "<this folder>/experiments/kl_gemma4_12b.sh" all` (takes the GPU lock; about 1 to 2 hours, most of it quantizing and the Q8_0 reference pass).
 
 ## Results
 
