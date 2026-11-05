@@ -34,6 +34,7 @@ This repo collects what actually works when using AI assistants (mostly Claude a
 | Learn about self-improving AI (Darwin Gödel Machine and relatives) | [Self-improving AI guide](guides/self-improving-ai/README.md) and its [reading list](guides/self-improving-ai/reading-list.md) |
 | Turn a stack of research papers into designs for my own project | [Research-to-project analysis prompt](prompts/patterns/research-to-project-analysis.md) |
 | Pick the right quantization for a local model (GGUF, AWQ, QAT, KV cache) and understand the methods behind it | [Quantization](Quantization/README.md), then the [RTX 3080 playbook](Quantization/quantization-playbook-for-the-rtx-3080.md) |
+| Make diagrams and reasoning maps an AI can actually use (formats, scaffolds for small models, graph memory) | [Diagramming](Diagramming/README.md), then [Applying diagrams and maps](Diagramming/applying-diagrams-and-maps-to-this-system.md) |
 
 ---
 
@@ -50,6 +51,7 @@ Long-form, opinionated write-ups on a single topic.
 | [**Mathematical Constraints for Agents**](Mathematical-constraints) | Using complexity bounds, pre/postconditions (Hoare logic), queueing theory and Little's Law, workload distributions, and information theory to constrain what an agent generates, with storage-systems examples and a plain-language B+tree explainer. | Engineers who want precise, checkable specs instead of "make it fast." |
 | [**Self-Improving AI**](guides/self-improving-ai/README.md) | The research on systems that improve themselves: Gödel Machine → Darwin Gödel Machine → Huxley-Gödel Machine and Hyperagents, plus SICA, ADAS, AlphaEvolve-style code evolution (OpenEvolve, ShinkaEvolve), self-training (STaR, SEAL) and open-endedness. Covers which methods work with API-only vs. open-weight models, how to split roles across models, and where to start. Includes a verified [reading list](guides/self-improving-ai/reading-list.md) of ~30 papers and repos. | Anyone planning to build a self-improving agent loop or just get oriented in the field. |
 | [**Quantization**](Quantization/README.md) | How model quantization works and what is current (2026): a glossary of every term (uniform, group, mixed precision, AdaRound, cross-layer equalization, distillation…), post-training methods (GPTQ, AWQ, rotation, codebooks, GGUF K/I-quants, SVDQuant), quantization-aware training (torchao, Gemma QAT, ParetoQ), number formats and KV-cache compression, a playbook for a 10 GB consumer GPU, the toolchain, and a source register with evidence labels. Mirrored from an Obsidian research folder; see the note at the top of each file. | Anyone running or fine-tuning models on limited VRAM, or trying to read the quantization literature. |
+| [**Diagramming**](Diagramming/README.md) | AI-ingestible diagrams and reasoning maps: which formats models read and write (Mermaid, DOT, Structurizr, JSON Canvas, repo maps), the diagram-plus-legend pattern, reasoning topologies (chain, tree, graph, DAG) and scaffolds that measurably help small models (blueprints, thought templates, procedure retrieval), graph memory for agents with the evidence and risks, and a ranked plan of local experiments linking scaffolds to quantized models. Mirrored from an Obsidian research folder. | Anyone feeding structure to an agent, or running small local models that need a plan. |
 
 ### 🎭 System prompts and personas
 
@@ -170,7 +172,7 @@ This is a personal collection, but issues and pull requests with tested improvem
 5. **Use a `.md` extension** and a lowercase, hyphenated file name (`code-review-prompt.md`, not `Code Review Prompt (1)`).
 6. **Get a line in the [Catalog](#catalog)** above.
 
-**Mirrored folders.** `Quantization/` is generated from the author's Obsidian vault by a mirror script and overwritten on every run. Pull requests against those files will be lost; open an issue instead, or send the change for the vault note.
+**Mirrored folders.** `Quantization/` and `Diagramming/` are generated from the author's Obsidian vault by a mirror script and overwritten on every run. Pull requests against those files will be lost; open an issue instead, or send the change for the vault note.
 
 **Template for a new prompt:**
 
