@@ -127,6 +127,8 @@ cd /mnt/ai-storage/tools && git clone --depth 1 https://github.com/ggml-org/llam
 ```
 
 - The runner: `bash "<this folder>/experiments/kl_gemma4_12b.sh" all` (takes the GPU lock; about 1 to 2 hours, most of it quantizing and the Q8_0 reference pass).
+- 21:41 run A done; 21:47 to 22:05 run B (per slice, `kl_slices.sh`); 22:12 to 22:46 run D self slice on the CPU path (`kl_cpu.sh`); 22:13 to 22:47 flash-attention A/B on the real tasks; 22:50 to 23:10 Qwen control and transformers cross-check; 23:13 run E started: the model's own answers rendered through the real template (`slice-self2.txt`, 20k tokens) on the deterministic path under the GPU lock, then the code slice fully on the CPU (chained, slow, overlaps the night shift without touching the GPU).
+- Run folders on the NVMe: `results/` (A), `results-chat-template/`, `results-code/`, `results-wiki/` (B), `results-cpu-self/` (D, malformed slice, kept for the record), `results-cpu-self2/` (E), `results-cpu-code/` (E, second stage). Each has a `REPORT.md`.
 
 ## Results
 

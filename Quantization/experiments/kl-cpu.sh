@@ -9,6 +9,7 @@ MODELS=${MODELS:-/mnt/ai-storage/models/gguf/gemma-4-12b-it}
 WORK=${WORK:-/mnt/ai-storage/quant-eval/gemma-4-12b-it}
 OLLAMA_BLOB=${OLLAMA_BLOB:-$(python3 -c "import json;d=json.load(open('/mnt/ai-storage/models/ollama/manifests/registry.ollama.ai/library/gemma4/12b'));print('/mnt/ai-storage/models/ollama/blobs/'+[l for l in d['layers'] if l['mediaType'].endswith('.model')][0]['digest'].replace(':','-'))")}
 CTX=2048; THREADS=${THREADS:-10}
+DEVFLAG=${DEVFLAG:--dev none}   # default: no GPU at all (slow, safe beside the night shift); DEVFLAG="" lets ggml use the GPU for matmuls while layers stay on the CPU (4x faster, still deterministic)
 log() { echo "[$(date '+%H:%M:%S')] $*"; }
 declare -A CAND=(
   [Q6_K]="$WORK/quants/gemma4-12b-Q6_K.gguf" [Q5_K_M]="$WORK/quants/gemma4-12b-Q5_K_M.gguf"
@@ -22,13 +23,13 @@ for slice in ${SLICES:-self code}; do
   f="$WORK/slice-$slice.txt"; R="$WORK/results-cpu-$slice"; mkdir -p "$R"; ref="$WORK/ref-cpu-$slice.kld"
   if [[ ! -s $ref ]]; then
     log "[$slice] CPU reference logits from Q8_0"
-    "$BIN/llama-perplexity" -m "$WORK/quants/gemma4-12b-Q8_0.gguf" -f "$f" --kl-divergence-base "$ref" -c $CTX -ngl 0 -dev none -fa off -t $THREADS > "$R/ref-Q8_0.log" 2>&1
+    "$BIN/llama-perplexity" -m "$WORK/quants/gemma4-12b-Q8_0.gguf" -f "$f" --kl-divergence-base "$ref" -c $CTX -ngl 0 $DEVFLAG -fa off -t $THREADS > "$R/ref-Q8_0.log" 2>&1
   fi
   for name in $ORDER; do
     m=${CAND[$name]}; out="$R/kl-$name.log"
     [[ -s $out ]] && grep -q "Mean KLD" "$out" && continue
     log "[$slice] KL (CPU): $name"
-    "$BIN/llama-perplexity" -m "$m" -f "$f" --kl-divergence-base "$ref" --kl-divergence -c $CTX -ngl 0 -dev none -fa off -t $THREADS > "$out" 2>&1 || log "FAILED $slice $name"
+    "$BIN/llama-perplexity" -m "$m" -f "$f" --kl-divergence-base "$ref" --kl-divergence -c $CTX -ngl 0 $DEVFLAG -fa off -t $THREADS > "$out" 2>&1 || log "FAILED $slice $name"
   done
   log "[$slice] report"; python3 -I "$(dirname "$0")/kl_report.py" "$R" "$WORK/quants" "$MODELS" "$OLLAMA_BLOB" > "$R/REPORT.md"
 done
