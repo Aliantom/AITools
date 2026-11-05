@@ -54,3 +54,9 @@ A third drop-in, `92-kv-cache.conf`, with `Environment="OLLAMA_KV_CACHE_TYPE=q8_
 - Confirm the projector `FROM` syntax on a scratch model before relying on it.
 - Confirm the Ollama registry's quantization recipe (imatrix or not) from the Ollama GitHub repo; the experiment answers the practical question either way.
 - The OpenAI-compatible endpoint returns no log-probabilities (needed by MMLU-style evals); `llama-server` from the same build does.
+
+## 6. Added 2026-11-04 night: evaluating chat-formatted text with llama.cpp
+
+- `llama-perplexity` tokenizes its input with `parse_special=false`, so chat markers in a text file are scored as literal characters. The local build at `/mnt/ai-storage/tools/llama.cpp-main` carries a one-line patch (`tools/perplexity/perplexity.cpp`, `common_tokenize(..., true, true)`) that parses them. Plain-text evaluations are unaffected either way.
+- Gemma 4's markers are `<|turn>user\n ... <turn|>\n<|turn>model\n ... <turn|>\n`, with thinking in `<|channel>thought\n ... <channel|>`; render with the HF tokenizer's `apply_chat_template` rather than by hand.
+- Flash attention: Ollama's auto setting is on for gemma4 here; measured task accuracy is unchanged with it off, so leave it.

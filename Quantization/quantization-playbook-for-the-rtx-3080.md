@@ -109,3 +109,12 @@ FLUX.1-class models at INT4 through Nunchaku (SVDQuant) fit the card with memory
 - **Sub-4-bit option:** EXL3 beats GGUF under 4 bpw; GGUF custom mixes win above 5. Only relevant if a 20B-class dense model is wanted on this card. (S97, S98)
 - **qwen3:30b-a3b:** the installed Q4 spills to swap; an Unsloth UD 2-bit-expert mix (about 10 to 11 GB) is the only fit, chat-grade; test by KL first. ([Quantization of MoE and multimodal models](quantization-of-moe-and-multimodal-models.md))
 - **The measured answer** for gemma4:12b is pending in [Quantization KL experiment 001 (gemma4 12b)](quantization-kl-experiment-001-gemma4-12b.md).
+
+## 11. Measured on this PC, 2026-11-04 night (experiment 001)
+
+- **KL thresholds from other models do not transfer to Gemma 4.** The 12B-it assigns perplexity about 16 to ordinary Python and about 700 to Wikipedia text (transformers agrees with llama.cpp within 6%), so on raw text its distributions are flat and any perturbation produces a heavy tail of huge per-token KL values. Use the **median** KL and the **relative order** of candidates, and let **task accuracy** decide. Details and tables: [Quantization KL experiment 001 (gemma4 12b)](quantization-kl-experiment-001-gemma4-12b.md).
+- **Flash attention on CUDA changes Gemma 4's logits** (same Q8_0 weights: mean KL 0.22 versus the CPU path, one top token in thirteen flipped) but **not its task accuracy** on the extraction job (0.758 off vs 0.753 on, 5 of 150 items flip, within noise) and it is 1.7× faster. Keep it on. Re-check when llama.cpp fixes its open Gemma 4 flash-attention issues.
+- **The CPU path is deterministic** and is the reference path for any future KL measurement here (`-ngl 0 -dev none -fa off`).
+- **Chat-formatted evaluation needs two things**: Gemma 4's real template (`<|turn>user`, `<turn|>`, `<|turn>model`, `<|channel>thought`), best rendered by the HF tokenizer's `apply_chat_template`, and a `llama-perplexity` that parses special tokens (stock build does not; a one-line local patch does).
+- **Ollama import of a custom quant works** with FROM, DRAFT, FROM (projector); verified on a scratch tag.
+- **Big quants need partial offload** for scoring: Q5_K_M (8.0 GB) and Q6_K (9.1 GB) do not fit 10 GB with a 2048-token compute buffer at full offload.

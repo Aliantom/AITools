@@ -7,6 +7,20 @@
 
 Newest entry first. Each entry: what was asked, what was done, what was found, what changed, what is open. When a later entry answers an open question, say so and link the note that holds the answer.
 
+## 2026-11-04 (night): experiment 001 ran; what it actually measured
+
+**Done.** llama.cpp built (commit 3de52ac); 35 GB of model files and datasets downloaded; eleven quants scored on mixed text (run A), per slice (run B), on the CPU path (run D); a Qwen2.5-3B control; CPU/GPU/flash-attention diagnostics; a transformers NF4 cross-check; a flash-attention A/B on the real extraction and code-repair tasks; a scratch Ollama import with draft and projector. Four amendments in [Quantization KL experiment 001 (gemma4 12b)](quantization-kl-experiment-001-gemma4-12b.md), each written before reading the result it governs.
+
+**Found.**
+1. Gemma 4 12B-it is far out of distribution on raw text (perplexity 16 on Python, 700 on Wikipedia; transformers confirms), so KL against a Q8_0 reference has a heavy tail on every candidate; mean KL and the pre-registered thresholds cannot rank it. Median KL is normal (code: Q6_K 0.002, Q4_K_M-imat 0.007, plain Q4_K_M 0.037) and the ranking is stable: Q6_K, then UD-Q4_K_XL and Q5_K_M close, then Q4_K_M with imatrix and the installed Ollama blob close, then IQ4_XS, then plain Q4_K_M well behind, then the 3-bit class.
+2. The imatrix matters more for this model than the literature average: plain Q4_K_M is about 2× the mean and 5× the median KL of Q4_K_M-imat on code.
+3. llama.cpp's CUDA flash-attention path disagrees with its CPU path on Gemma 4 (0.22 mean KL, 92% top-1), yet the extraction task score is unchanged (0.758 vs 0.753). Keep flash attention on.
+4. The QAT checkpoint is a different model (KL 2.4 to 3.0 from the original); it needs task evals, not KL.
+5. Ollama's own blob behaves like an imatrix quant (close to Q4_K_M-imat, far from plain Q4_K_M), so hypothesis 4 ("Ollama uses no imatrix") is not supported.
+6. My chat slices used Gemma 3 markers and the tool does not parse special tokens; both fixed for run E.
+
+**Open.** 20. Run E: own-answers slice through the real template with the patched tool, CPU path. 21. Task-accuracy comparison of the top three quants (Q6_K will not fit beside a useful context; UD-Q4_K_XL vs installed blob vs Q4_K_M-imat) with the quant-eval bundle. 22. File the flash-attention numerical discrepancy upstream with the reproduction. 23. Decide whether a Q5_K_M (8.0 GB) is usable at all with the KV cache this PC needs.
+
 ## 2026-11-04 (late evening): passes 2 to 4 before implementation
 
 **Asked.** Start the three pre-implementation passes while the owner builds llama.cpp: evaluation methods for this PC's jobs, Ollama mechanics for applying a custom quant, and full reads of the five load-bearing papers.

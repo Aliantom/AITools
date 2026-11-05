@@ -184,3 +184,13 @@ Ids (S1, S2, ...) are what the other notes cite.
 | S120 | [Ollama 0.34 speculative decoding by default (runaihome)](https://runaihome.com/blog/ollama-034-speculative-decoding-default-home-lab-2026/) and [speculative decoding setup 2026](https://runaihome.com/blog/speculative-decoding-llama-cpp-local-llm-setup-2026/) | blogs | 2026 | DRAFT directive, draft_num_predict | SECONDARY |
 | S121 | [Unsloth: Gemma 4 QAT](https://unsloth.ai/docs/models/gemma-4/qat) and [Google Gemma docs](https://ai.google.dev/gemma/docs/base) | docs | 2026 | QAT GGUF availability; q4_0 warning | SUMMARY |
 | S122 | This PC: `ollama create --help`, `ollama show --modelfile gemma4:12b`, service journal, drop-ins, `/v1/models`, evolve-lab `loop.py` and tasks, finetune-lab `evalrun.py` | local | 2026-11-04 | Ollama mechanics and the existing eval harness | LOCAL |
+
+## Experiment night, 2026-11-04
+
+| Id | Source | Type | Date | Used for | Label |
+|---|---|---|---|---|---|
+| S123 | This PC: experiment 001 runs A, B, D, control, diagnostics, A/B, transformers cross-check (`/mnt/ai-storage/quant-eval/`) | measured | 2026-11-04 | Every number in the experiment note | MEASURED |
+| S124 | Gemma 4 chat template read from the Unsloth GGUF and rendered by the HF tokenizer | local | 2026-11-04 | Real turn and thinking markers | LOCAL |
+| S125 | [llama.cpp issue #21336: gemma4 segfault at longer context, FA off avoids it](https://github.com/ggml-org/llama.cpp/issues/21336) and [#24400: Gemma 4 E4B crashes with flash attention on](https://github.com/ggml-org/llama.cpp/issues/24400) | issues | 2026 | Known Gemma 4 flash-attention problems | SUMMARY |
+| S126 | [dahus/gemma-4-e2b-Q6_K-GGUF model card](https://huggingface.co/dahus/gemma-4-e2b-Q6_K-GGUF) | model card | 2026 | Community KL for E2B: Q6_K 0.07, Q4_K_M 0.34, top-1 94% / 82% | SUMMARY |
+| S127 | `tools/perplexity/perplexity.cpp` in llama.cpp 3de52ac: `common_tokenize(ctx, params.prompt, true)` (parse_special defaults to false) | source | 2026-11-04 | Why chat markers were scored as text | LOCAL |

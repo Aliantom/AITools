@@ -22,13 +22,13 @@ for slice in ${SLICES:-self code}; do
   f="$WORK/slice-$slice.txt"; R="$WORK/results-cpu-$slice"; mkdir -p "$R"; ref="$WORK/ref-cpu-$slice.kld"
   if [[ ! -s $ref ]]; then
     log "[$slice] CPU reference logits from Q8_0"
-    "$BIN/llama-perplexity" -m "$WORK/quants/gemma4-12b-Q8_0.gguf" -f "$f" --kl-divergence-base "$ref" -c $CTX -ngl 0 -fa off -t $THREADS > "$R/ref-Q8_0.log" 2>&1
+    "$BIN/llama-perplexity" -m "$WORK/quants/gemma4-12b-Q8_0.gguf" -f "$f" --kl-divergence-base "$ref" -c $CTX -ngl 0 -dev none -fa off -t $THREADS > "$R/ref-Q8_0.log" 2>&1
   fi
   for name in $ORDER; do
     m=${CAND[$name]}; out="$R/kl-$name.log"
     [[ -s $out ]] && grep -q "Mean KLD" "$out" && continue
     log "[$slice] KL (CPU): $name"
-    "$BIN/llama-perplexity" -m "$m" -f "$f" --kl-divergence-base "$ref" --kl-divergence -c $CTX -ngl 0 -fa off -t $THREADS > "$out" 2>&1 || log "FAILED $slice $name"
+    "$BIN/llama-perplexity" -m "$m" -f "$f" --kl-divergence-base "$ref" --kl-divergence -c $CTX -ngl 0 -dev none -fa off -t $THREADS > "$out" 2>&1 || log "FAILED $slice $name"
   done
   log "[$slice] report"; python3 -I "$(dirname "$0")/kl_report.py" "$R" "$WORK/quants" "$MODELS" "$OLLAMA_BLOB" > "$R/REPORT.md"
 done

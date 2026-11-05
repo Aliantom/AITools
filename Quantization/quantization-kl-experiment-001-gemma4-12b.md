@@ -85,6 +85,36 @@ Flash attention on versus off on the GPU, same weights: 0.224, max 33.7. The CPU
 
 **Consequences.** (1) Every KL number in runs A and B measures kernel error plus quantization, not quantization. (2) Ollama runs `gemma4:12b` with flash attention enabled (its runner log says so), on the same ggml CUDA kernels, so the production worker is likely affected; whether it costs task accuracy is unmeasured and is the first thing to test. (3) Run D scores the eight main candidates on the CPU path only (`experiments/kl_cpu.sh`), on the model's own answers (`slice-self.txt`, 40 ultrachat questions answered by the installed model, thinking off, temperature 0, about 23k tokens) and the code slice. Thresholds unchanged for run D.
 
+## Amendment 4 (2026-11-04 22:55): task-level check, template error, and determinism
+
+**Flash attention does not reach task accuracy here.** The installed `gemma4:12b` scored through evolve-lab's `loop.evaluate` (seed prompt, JSON schema, temperature 0, train split; holdout untouched), once on a throwaway Ollama instance on port 11435 started with `OLLAMA_FLASH_ATTENTION=0`, once on the production server (flash attention on):
+
+| Task | FA off | FA on | Items that changed | Seconds per item (off / on) |
+|---|---|---|---|---|
+| ticker-extract-v2 (150 items) | 0.758 | 0.753 | 5 of 150 | 4.8 / 2.8 |
+| code-repair-choice-v1 (6 train items) | 1.000 | 1.000 | 0 of 6 | 2.4 / 1.1 |
+
+One extraction item is 0.0067 of the score, so the difference is noise. Reading: the per-token KL spikes are real but, on a short JSON extraction task at temperature 0, they rarely change the chosen answer. Flash attention stays on; it is 1.7× faster. No service change recommended on this evidence.
+
+**The chat-formatted slices were malformed.** Gemma 4's template (read from the GGUF, 18,922 characters) uses `<|turn>user`, `<turn|>`, `<|turn>model` and a `<|channel>thought ... <channel|>` thinking block; `<start_of_turn>` is Gemma 2/3 syntax and does not exist here. Separately, `llama-perplexity` tokenizes its input with `parse_special=false`, so any marker in the text is scored as literal characters anyway. That is why the Q8_0 reference scored perplexity 22 on the model's own answers. The chat-template and self slices are therefore not in-distribution tests and are set aside; the code and wiki slices (plain text) are unaffected.
+
+**The CPU path is exactly deterministic**, for Gemma 4 and for the Qwen control: changing the thread count (summation order) gives KL 0.000 and maximum 0.00005 on both. So Gemma 4's large Q6_K-vs-Q8_0 tail on the CPU path (code slice: mean 0.48, median 0.002, 99th percentile 10.8) is a genuine sensitivity of the computation to weight perturbation, not noise. Whether it is the model or llama.cpp's implementation of it is the remaining question; an independent transformers (bitsandbytes NF4) reference on the same code slice is being run to answer it.
+
+**Run D (CPU path, code slice)** is finishing; its table replaces run B's as the quantization ranking.
+
+## Independent reference (2026-11-04 23:10): transformers agrees with llama.cpp
+
+To test whether llama.cpp's Gemma 4 implementation is wrong, the same code slice was scored in transformers 5.20 with bitsandbytes NF4 (the only precision of a 12B that fits 10 GB), 256-token windows, second half of each window scored, the same windowing llama.cpp uses.
+
+| Model | llama.cpp (CPU, Q8_0 or BF16) | transformers NF4 |
+|---|---|---|
+| Qwen2.5-3B-Instruct | 3.14 | 3.20 |
+| gemma-4-12b-it | 15.53 | 16.39 |
+
+The two implementations agree within 6% on both models. So llama.cpp's forward pass for Gemma 4 is not broken: Gemma 4 12B-it genuinely assigns perplexity about 16 to ordinary Python (and about 700 to Wikipedia text), five times a 3B Qwen on the same text. A heavily post-trained thinking model is simply far from raw text, and in that regime its output distribution is flat and twitchy, which is what the large KL tails under any perturbation (quantization, flash attention, CPU-versus-GPU) are measuring. The remaining implementation-level fact is that llama.cpp's own CUDA flash-attention path differs from its CPU path by 0.22 mean KL on this model, which no task score has yet shown to matter.
+
+**What this does to the experiment's logic.** KL on raw text cannot rank Gemma 4 quants against the pre-registered thresholds; those thresholds came from models that are not this far out of distribution. The usable readings are (1) the median KL, which reflects the typical token and is in the normal range (code slice: Q6_K 0.002, Q4_K_M-imat 0.007, plain Q4_K_M 0.037), (2) the relative order of candidates, which is consistent across slices and paths, and (3) task accuracy, which is the arbiter. A clean in-distribution KL test needs run E: the model's own answers through its real `<|turn>` template, scored by a `llama-perplexity` built with special-token parsing on, on the CPU path.
+
 ## Status
 
 - 2026-11-04 19:55: scripts written; downloads of BF16, UD-Q4_K_XL and QAT-UD-Q4_K_XL started; eval and calibration parquet files started.
