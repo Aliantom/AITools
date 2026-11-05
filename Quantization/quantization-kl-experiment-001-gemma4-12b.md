@@ -119,7 +119,7 @@ The two implementations agree within 6% on both models. So llama.cpp's forward p
 
 Rendering the model's own answers through the HF tokenizer's `apply_chat_template` still scored perplexity 15.8 (run E, discarded). The reason, read from the template: with thinking disabled, the generation prompt is `<|turn>model\n<|channel>thought\n<channel|>`, an empty thinking block, and the answer follows it; rendering a finished assistant turn omits that block, so the scored context differed from the generating context. `slice-self3.txt` renders each exchange as `<|turn>user\n{q}<turn|>\n<|turn>model\n<|channel>thought\n<channel|>{a}<turn|>\n`. Check: the Q8_0 reference scores it at perplexity 2.73 on the first two chunks (the question tokens are the model's only surprise). The turn markers tokenize to the single ids 105 and 106 with the stock tokenizer, so the perplexity patch was not needed for them.
 
-**Run F.** Five key candidates (Q6_K, UD-Q4_K_XL, Q4_K_M-imat, installed Ollama Q4_K_M, plain Q4_K_M) on `slice-self3` on the deterministic path (layers on the CPU, GPU-assisted matmul, flash attention off), under the GPU lock so it ends before the night shift; then the code slice for all nine candidates entirely on the CPU overnight (`-dev none`, 6 threads). The remaining four candidates on the own-answers slice run on the same path tomorrow against the same reference file. Paths are not mixed within a slice.
+**Run F.** Five key candidates (Q6_K, UD-Q4_K_XL, Q4_K_M-imat, installed Ollama Q4_K_M, plain Q4_K_M) on `slice-self3` on the deterministic path (fully on the CPU, `-dev none`, flash attention off; corrected 2026-11-05, see the path check under Results), under the GPU lock so it ends before the night shift; then the code slice for all nine candidates entirely on the CPU overnight (`-dev none`, 6 threads). The remaining candidates on the own-answers slice ran on the same path on 2026-11-05 against the same reference file. Paths are not mixed within a slice.
 
 ## Status
 
@@ -136,7 +136,7 @@ cd /mnt/ai-storage/tools && git clone --depth 1 https://github.com/ggml-org/llam
 - 21:41 run A done; 21:47 to 22:05 run B (per slice, `kl_slices.sh`); 22:12 to 22:46 run D self slice on the CPU path (`kl_cpu.sh`); 22:13 to 22:47 flash-attention A/B on the real tasks; 22:50 to 23:10 Qwen control and transformers cross-check; 23:13 run E started: the model's own answers rendered through the real template (`slice-self2.txt`, 20k tokens) on the deterministic path under the GPU lock, then the code slice fully on the CPU (chained, slow, overlaps the night shift without touching the GPU).
 - Run folders on the NVMe: `results/` (A), `results-chat-template/`, `results-code/`, `results-wiki/` (B), `results-cpu-self/` (D, malformed slice, kept for the record), `results-cpu-self2/` (E), `results-cpu-code/` (E, second stage). Each has a `REPORT.md`.
 
-## Results (as of 2026-11-05 00:25; the own-answers slice continues tomorrow)
+## Results (own-answers slice complete 2026-11-05 15:41)
 
 ### In distribution: the model's own answers, real template, deterministic path (run F)
 
@@ -144,9 +144,17 @@ Reference Q8_0 perplexity 4.49 (the question tokens are the only surprise).
 
 | Quant | GiB | Mean KLD | Median KLD | 99% KLD | Top-1 agreement |
 |---|---|---|---|---|---|
-| Q6_K | 9.11 | 0.032 | 0.0036 | 0.40 | 94.8% |
-| UD-Q4_K_XL | 6.86 | 0.074 | 0.0077 | 0.97 | 91.7% |
-| Q4_K_M-imat, installed Ollama Q4_K_M, plain Q4_K_M | | pending (cut by the 00:24 GPU-lock watchdog; rerun tomorrow against the same reference) | | | |
+| Q6_K | 9.11 | 0.032 ± 0.002 | 0.0036 | 0.40 | 94.8% |
+| Q5_K_M | 7.96 | 0.062 ± 0.003 | 0.0073 | 0.80 | 92.7% |
+| installed Ollama Q4_K_M | 6.87 | 0.070 ± 0.003 | 0.0081 | 0.91 | 91.9% |
+| UD-Q4_K_XL | 6.86 | 0.074 ± 0.003 | 0.0077 | 0.97 | 91.7% |
+| Q4_K_M-imat | 6.87 | 0.076 ± 0.003 | 0.0080 | 1.02 | 91.8% |
+| IQ4_XS-imat | 6.18 | 0.110 ± 0.004 | 0.0125 | 1.35 | 90.1% |
+| QAT-UD-Q4_K_XL (different weights) | 6.26 | 0.134 ± 0.005 | 0.0186 | 1.81 | 89.8% |
+| Q4_K_M (no imatrix) | 6.87 | 0.177 ± 0.005 | 0.0277 | 1.93 | 87.1% |
+| Q3_K_M-imat | 5.67 | 0.213 ± 0.006 | 0.0336 | 2.43 | 86.1% |
+
+Path check (2026-11-05): the seven new rows ran on the same path as the reference, fully on the CPU (`-dev none`, flash attention off). A first daytime pass with GPU-assisted matmuls (layers still on the CPU) gave different numbers (Q6_K 0.022 instead of 0.032) and was set aside in `results-cpu-self3-gpuassist/`; re-running Q6_K CPU-only reproduced 0.032202 exactly, and UD-Q4_K_XL re-ran to the identical 0.074041. So "layers on the CPU, GPU-assisted matmul" above was a mislabel: run F was CPU-only.
 
 Control, Qwen2.5-3B on code (BF16 reference): Q8_0 0.0011, Q6_K 0.0037, Q4_K_M 0.030 mean KLD; top-1 98.5%, 97.5%, 94.2%.
 
@@ -174,13 +182,15 @@ The means on this path carry the flash-attention tail (Amendment 3) and are only
 
 1. *Q6_K and Q5_K_M under 0.01, Q4_K_M 0.01 to 0.03, Q3_K_M above 0.05 (mean).* Not met in mean terms for this model: even Q6_K is 0.032 in distribution. Met in median terms (Q6_K 0.0036, Q5_K_M 0.0049 on code). The thresholds were calibrated on models that are not this far out of distribution; see the Independent reference section.
 2. *The imatrix cuts KL by at least 10% at Q4_K_M and 25% at Q3_K_M.* Confirmed, strongly: Q4_K_M plain versus imatrix 1.31 versus 0.83 mean (37% lower) and 0.037 versus 0.0074 median (80% lower); Q3_K_M 1.76 versus 1.34 (24%) and 0.21 versus 0.079 (62%).
-3. *UD-Q4_K_XL within 10% of Q4_K_M-imat.* It is 6% better on code at the same size; the in-distribution comparison is pending.
+3. *UD-Q4_K_XL within 10% of Q4_K_M-imat.* It is 6% better on code at the same size; in distribution the two tie (0.074 versus 0.076 mean, within twice the standard error).
 4. *The installed Ollama blob matches a no-imatrix Q4_K_M.* Rejected: it behaves like an imatrix quant (0.89 versus 1.31 mean, 0.0073 versus 0.037 median). Whatever Ollama's recipe is, it is not plain rounding.
 5. *KV q8_0 adds under 0.002, q4_0 more than 0.005.* On the flash-attention path: q8_0 adds 0.04 mean and 0.0007 median; q4_0 adds 0.22 mean and 0.0054 median. q8_0 is acceptable, q4_0 is not; to be re-measured on the deterministic path.
 
 ### Decision
 
-No change to `gemma4:12b` tonight. The decision rule needs the installed blob and UD-Q4_K_XL on the same in-distribution slice (tomorrow) and then a task-level check with the quant-eval bundle. What the data already says: Q6_K is the best quant but at 9.1 GB leaves no room for context on this card; Q5_K_M at 8.0 GB is marginal; among the files that fit, UD-Q4_K_XL is the best measured so far and the installed blob is close behind it; plain (no-imatrix) quants and anything at 3 bits should not be used for this model.
+**2026-11-05, own-answers slice complete: no change to `gemma4:12b`.** Read with the pre-registered tie rule (a difference under twice the larger standard error is a tie): the installed Ollama blob (0.070), UD-Q4_K_XL (0.074) and Q4_K_M-imat (0.076) are tied, so no 4-bit file beats what is installed. Q5_K_M (0.062) is genuinely better than the blob, and Q6_K (0.032) clearly so, but no candidate reaches the pre-registered "safe" bar (0.02 mean, 95% top-1), so the decision rule does not fire. The open question is only whether Q5_K_M's 1.1 GB extra (or Q6_K, which leaves no room for context) buys task accuracy; that is a task-level check with the quant-eval bundle and the owner's call, not a KL question.
+
+Earlier (2026-11-05 00:25): no change to `gemma4:12b` that night. The decision rule needed the installed blob and UD-Q4_K_XL on the same in-distribution slice and then a task-level check with the quant-eval bundle. What the data already says: Q6_K is the best quant but at 9.1 GB leaves no room for context on this card; Q5_K_M at 8.0 GB is marginal; among the files that fit, UD-Q4_K_XL is the best measured so far and the installed blob is close behind it; plain (no-imatrix) quants and anything at 3 bits should not be used for this model.
 
 ### Also learned
 

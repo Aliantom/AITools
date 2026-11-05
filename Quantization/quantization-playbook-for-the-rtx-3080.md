@@ -108,7 +108,7 @@ FLUX.1-class models at INT4 through Nunchaku (SVDQuant) fit the card with memory
 - **Gemma 4's draft model:** Ollama's `gemma4:12b` already carries a 443 MiB multi-token-prediction draft; speculative decoding is on without extra work. ([Quantization serving kernels and speculative decoding](quantization-serving-kernels-and-speculative-decoding.md))
 - **Sub-4-bit option:** EXL3 beats GGUF under 4 bpw; GGUF custom mixes win above 5. Only relevant if a 20B-class dense model is wanted on this card. (S97, S98)
 - **qwen3:30b-a3b:** the installed Q4 spills to swap; an Unsloth UD 2-bit-expert mix (about 10 to 11 GB) is the only fit, chat-grade; test by KL first. ([Quantization of MoE and multimodal models](quantization-of-moe-and-multimodal-models.md))
-- **The measured answer** for gemma4:12b is pending in [Quantization KL experiment 001 (gemma4 12b)](quantization-kl-experiment-001-gemma4-12b.md).
+- **The measured answer** for gemma4:12b ([Quantization KL experiment 001 (gemma4 12b)](quantization-kl-experiment-001-gemma4-12b.md), 2026-11-05): the installed Ollama Q4_K_M ties Unsloth UD-Q4_K_XL and a local imatrix Q4_K_M on the model's own answers (mean KL 0.070 to 0.076), Q5_K_M is measurably better (0.062), Q6_K best (0.032); plain no-imatrix Q4_K_M (0.177) and 3-bit should not be used. No tag change.
 
 ## 11. Measured on this PC, 2026-11-04 night (experiment 001)
 
