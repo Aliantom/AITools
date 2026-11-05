@@ -4,7 +4,7 @@ Run: python3 -I kl_report.py <results dir> <quants dir> <models dir> <ollama blo
 import pathlib, re, sys
 
 FIELDS = [("Mean PPL(Q)", r"Mean PPL\(Q\)\s*:\s*([\d.]+)"), ("Mean KLD", r"Mean\s+KLD:\s*([\d.]+)"),
-          ("Median KLD", r"Median\s+KLD:\s*([\d.]+)"), ("KLD 99%", r"KLD_99\s*:\s*([\d.]+)"),
+          ("Median KLD", r"Median\s+KLD:\s*([\d.]+)"), ("KLD 99%", r"99\.0%\s+KLD:\s*([\d.]+)"),
           ("Same top p", r"Same top p:\s*([\d.]+)"), ("Max KLD", r"Maximum KLD:\s*([\d.]+)")]
 
 

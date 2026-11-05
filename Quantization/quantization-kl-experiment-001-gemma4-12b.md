@@ -48,6 +48,43 @@ Which quantization of the default local worker (`gemma4:12b`, Ollama's Q4_K_M) i
 
 **Other limits.** Teacher-forced scoring on text is not generation; chat is rendered without Gemma's template; the Ollama blob may differ in metadata from Unsloth's conversion; 26k tokens cannot resolve differences below about 0.001; the thinking mode is not exercised.
 
+## Amendment 1 (2026-11-04 21:40, before any KL result was read)
+
+**Observation during the run.** Sanity perplexities on the eval slices with two known-good 4-bit files (Unsloth UD-Q4_K_XL and the Ollama blob): wiki slice 751 and 626, plain chat transcripts 48, code 15. A control model (qwen2.5-coder 7B) scores 9.1 on the same wiki slice. GGUF metadata is sane (BOS added, final logit softcapping 30, sliding-window pattern present), a 512-token context changes nothing (600), and greedy generation is coherent. Formatting the chat slice in Gemma's own turn template lowers it from 48 to 30. Reading: the model runs correctly; a heavily post-trained thinking model is simply far from raw Wikipedia text, so the wiki slice would contribute huge, noisy per-token KL values and dominate the mixed-text mean.
+
+**Change.** Run A (the pre-registered mixed text) completes and is reported as planned. Run B (`experiments/kl_slices.sh`) adds per-slice KL on three files: the chat slice in Gemma's template, the code slice, and the wiki slice, each with its own Q8_0 reference. The decision rule now reads: the "safe" thresholds apply to the chat-template and code slices; the wiki slice is reported as a stress domain and does not decide. Hypotheses and thresholds are otherwise unchanged.
+
+**Why this is allowed.** No KL number had been produced or read when the amendment was written; only perplexity sanity checks were.
+
+## Amendment 2 (2026-11-04 21:55, after run A, before any run B result)
+
+**Run A result (mixed text, as pre-registered).** Not decision-grade. Mean KLD: Q6_K 0.50, Q5_K_M 0.74, UD-Q4_K_XL 0.77, installed Ollama Q4_K_M 0.83, Q4_K_M-imat 0.88, Q4_K_M plain 1.40, Q3_K_M-imat 1.58, IQ3_M-imat 1.62, Q3_K_M plain 2.39, QAT-UD-Q4_K_XL 2.95 (a different model, as the caveat said). Top-1 agreement 81% down to 49%. Full table in `results/REPORT.md` on the NVMe. These values are two orders of magnitude above what Q6_K costs on normal text, which prompted the checks below.
+
+**Diagnostics.**
+1. Q8_0 scored against its own reference at the same GPU split: KL 0.000, top-1 99.99% (the pipeline is sound).
+2. Q8_0 scored against its own reference with a different split (20 instead of 30 layers on the GPU): mean KL 0.034, median 0.0027, top-1 95.1%. The CPU and CUDA paths disagree enough on this model to flip one top token in twenty on this text. Any run must therefore use the same split as the reference.
+3. Q4_K_M-imat at the reference split: 0.865, unchanged. So run A's spread is real for this text, and the text is the problem: a model with perplexity 700 on a slice has nearly flat distributions there, and flat distributions make KL and top-1 agreement measure noise.
+
+**Changes.** (a) Run B scores every candidate and the KV arm at the reference split (30 layers). (b) Run C adds a fourth slice, `slice-self.txt`: 40 ultrachat questions (rows 5000 onward, disjoint from everything else) answered by the installed `gemma4:12b` with thinking off at temperature 0, written in Gemma's turn template. Scoring quants on the model's own answers measures drift where the model is confident, which is the regime the agents run in. (c) The decision rule applies to the self-generated and chat-template slices first, code second; wiki is a stress domain only. Thresholds unchanged, with the 0.034 split-noise result noted as the floor to beat.
+
+## Amendment 3 (2026-11-04 22:15): the CUDA flash-attention path is numerically wrong for gemma4
+
+**Run B result (per slice, reference split everywhere).** Still oversized: chat-template slice Q6_K mean 0.31 (median 0.025, top-1 84.5%), UD-Q4_K_XL 0.56, Q5_K_M 0.73, installed Ollama blob 0.85, Q4_K_M-imat 0.85, plain Q4_K_M 1.00, Q3 class 1.1 to 1.5. Code slice: medians are normal (Q6_K 0.002, Q4_K_M-imat 0.007, Q4_K_M plain 0.037) but means are 0.48 to 1.8 because 1 to 2% of tokens have KL above 10. Tables in `results-chat-template/`, `results-code/`, `results-wiki/` on the NVMe.
+
+**Control (Qwen2.5-3B-Instruct, BF16 reference, full GPU offload, code slice).** Q8_0 0.0011, Q6_K 0.0037, Q4_K_M 0.030; maximum KL 1.2; a different offload split changes Q8_0 by 0.0000. Textbook. The pipeline is sound.
+
+**Gemma 4, same Q8_0 weights, code slice, against a CPU-only reference (`-ngl 0 -fa off`).**
+
+| Run | Mean KLD | Max KLD | 99% KLD | Top-1 agreement |
+|---|---|---|---|---|
+| CPU again | 0.000 | 0.00005 | 0.00003 | 100.0% |
+| GPU 30 layers, flash attention off | 0.023 | 4.9 | 0.38 | 96.3% |
+| GPU 30 layers, flash attention on | 0.222 | 21.0 | 5.3 | 92.3% |
+
+Flash attention on versus off on the GPU, same weights: 0.224, max 33.7. The CPU path is deterministic and the control model shows GPU and CPU agreeing to 0.001, so the CUDA flash-attention kernels (and to a lesser degree the non-FA CUDA path) are producing wrong logits for Gemma 4 at a small fraction of positions, badly enough to flip the top token one time in thirteen. llama.cpp's tracker has Gemma 4 crash reports under flash attention (#21336, #24400) with a theory about batching sliding-window and global layers; no numerical report was found. Build: commit 3de52ac of 2026-11-04.
+
+**Consequences.** (1) Every KL number in runs A and B measures kernel error plus quantization, not quantization. (2) Ollama runs `gemma4:12b` with flash attention enabled (its runner log says so), on the same ggml CUDA kernels, so the production worker is likely affected; whether it costs task accuracy is unmeasured and is the first thing to test. (3) Run D scores the eight main candidates on the CPU path only (`experiments/kl_cpu.sh`), on the model's own answers (`slice-self.txt`, 40 ultrachat questions answered by the installed model, thinking off, temperature 0, about 23k tokens) and the code slice. Thresholds unchanged for run D.
+
 ## Status
 
 - 2026-11-04 19:55: scripts written; downloads of BF16, UD-Q4_K_XL and QAT-UD-Q4_K_XL started; eval and calibration parquet files started.
