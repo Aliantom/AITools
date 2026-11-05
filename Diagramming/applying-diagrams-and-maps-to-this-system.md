@@ -23,13 +23,13 @@ Ordered by expected value against cost. Each item names the artefact, the test, 
 
 ## 3. A blueprint library for the 4-bit workers (scaffold, and the quantization link)
 
-**Artefact.** Five to ten blueprints (step-by-step procedures) for the recurring local jobs: ticker extraction, lead enrichment checks, code repair, summarization with verbatim quotes, diagram generation. Stored as notes with `type: blueprint`, retrieved by task type, placed in the prompt. The large model (Claude) writes and revises them; the small model executes. This is the Blueprints and instruction-retrieval recipe.
+**Artefact.** Five to ten blueprints (step-by-step procedures) for the recurring local jobs: ticker extraction, lead enrichment checks, code repair, summarization with verbatim quotes, diagram generation. Stored as notes with `type: blueprint`, retrieved by task type, placed in the prompt 1-shot without chain-of-thought, as the paper does. The large model (Claude) writes each in two or three of the paper's 12 styles and the style is chosen on at least 50 dev items with the existing scorer (the paper chose on 10 and admits its template search was unreliable for that reason). Skip APO and template search.
 
-**Test (pre-registered).** Run `gemma4:12b` at Q4_K_M and, once experiment 001 picks it, at the best alternative quant, on the 150-item extraction set and the code repairs, with and without the blueprint. Four cells. Hypotheses: blueprints raise the Q4 score; the gain is larger at the lower quant (scaffolds compensate quantization). Stop if the blueprint adds under 0.02 on the extraction score.
+**Test (pre-registered).** Run `gemma4:12b` at Q4_K_M and, once experiment 001 picks it, at the best alternative quant, through evolve-lab's `loop.evaluate` (via finetune-lab's `evalrun.py`) on ticker-extract-v2 and code-repair-choice-v1 dev splits, with and without the blueprint. Four cells per task. Hypotheses: blueprints raise the Q4 score, most on code repair (the paper's largest gains were on MBPP); the gain is larger at the lower quant (scaffolds compensate quantization). Stop if the blueprint adds under 0.02 on extraction and under 0.05 on code repair.
 
 ## 4. DAG-shaped reasoning records on hard tasks (scaffold and check)
 
-**Artefact.** A response schema for hard tasks: numbered steps with `parents` and `conclusion`, as in DAG-Math; a deterministic checker that rejects dangling steps; a renderer to Mermaid for the owner. Used by the night-shift reviewer and by any evaluation that compares quantizations.
+**Artefact.** A response schema for hard tasks: numbered steps written Edge, Parents, Node as in DAG-Math; a deterministic checker that flags unused non-final nodes and missing parents (not reject: even correct answers leave about 20% dangling); a renderer to Mermaid for the owner. Used by the night-shift reviewer and by any evaluation that compares quantizations.
 
 **Test.** On the extraction set, measure how often two quants of the same model produce "logically close" DAGs; compare with their KL. Stop if the DAG format costs more than 30% extra tokens without catching errors the plain format missed.
 

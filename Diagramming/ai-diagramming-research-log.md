@@ -5,6 +5,10 @@
 > **TL;DR:** Dated log: first pass on 2026-11-04 established that text diagrams with legend tables and small-model scaffolds are the evidence-backed moves, found no study that tests scaffolds on quantized models, and queued five local experiments.
 > **Source:** Running log for the AI diagramming and reasoning maps research; started 2026-11-04  ·  **Project:** AI workstation  ·  **Updated:** 2026-11-04
 
+## 2026-11-04 (late evening): full reads of Blueprints and DAG-Math
+
+Both papers read in full (summaries of the HTML). Blueprints: numbers added to the reasoning note; gains are real on small models (Mistral-7B MBPP 0.233 to 0.440) but automatic prompt optimization and template search sometimes hurt and style choice matters 11 to 12% for small models, so the local experiment now picks style on 50 dev items and skips the rest. DAG-Math: format corrected to Edge, Parents, Node; logical closeness defined; even correct answers are at most 80% closed, so the checker flags instead of rejecting. Open question 5 is closed; question 1's design is updated in [Applying diagrams and maps to this system](applying-diagrams-and-maps-to-this-system.md).
+
 ## 2026-11-04: first pass (Claude Code, Fable 5.1)
 
 **Asked.** Whether AI-ingestible diagrams, system-logic maps and thought-process maps can be tuned to improve the AI on this PC, now and over time; what "ingestible metadata" means; how it connects to quantization.

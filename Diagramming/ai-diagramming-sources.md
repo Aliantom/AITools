@@ -10,12 +10,12 @@ Labels as in the Quantization folder: FETCHED (page fetched and summarized), SUM
 | Id | Source | Type | Date | Used for | Label |
 |---|---|---|---|---|---|
 | D1 | [On the Diagram of Thought (arXiv 2409.10038)](https://arxiv.org/abs/2409.10038v3) | paper | 2024 | DAG reasoning in one model, role tokens | SUMMARY |
-| D2 | [DAG-Math (ICLR 2026; arXiv 2510.19842)](https://arxiv.org/abs/2510.19842) | paper | 2025/26 | Step schema, logical closeness | SUMMARY |
+| D2 | [DAG-Math (ICLR 2026; arXiv 2510.19842)](https://arxiv.org/abs/2510.19842) | paper | 2025/26 | Step schema, logical closeness | FETCHED (full read 2026-11-04 evening) |
 | D3 | [Graph of Thoughts (AAAI 2024)](https://ojs.aaai.org/index.php/AAAI/article/view/29720/31236) and [GoT topic page](https://www.emergentmind.com/topics/graph-of-thoughts-got) | paper, secondary | 2024/25 | 62% / 31% result; variants | SUMMARY |
 | D4 | [Demystifying Chains, Trees, and Graphs of Thoughts (arXiv 2401.14295)](https://www.alphaxiv.org/abs/2401.14295) | taxonomy | 2024/26 | Reasoning topologies vocabulary | SUMMARY |
 | D5 | [From Chains to Graphs: Self-Structured Reasoning (arXiv 2601.03597)](https://arxiv.org/pdf/2601.03597) | paper | Jan 2026 | Reference list only | TITLE |
 | D6 | [Position: How can Graphs Help LLMs? (arXiv 2605.02452)](https://arxiv.org/pdf/2605.02452) | position | May 2026 | Background | TITLE |
-| D7 | [Blueprints and prompt template search for SLMs (ICML 2025; arXiv 2506.08669)](https://arxiv.org/html/2506.08669) | paper | 2025 | Small-model scaffolds | SUMMARY |
+| D7 | [Blueprints and prompt template search for SLMs (ICML 2025; arXiv 2506.08669)](https://arxiv.org/html/2506.08669) | paper | 2025 | Small-model scaffolds | FETCHED (full read 2026-11-04 evening) |
 | D8 | [ReasonFlux (arXiv 2502.06772)](https://arxiv.org/pdf/2502.06772) | paper | 2025 | Thought templates | SUMMARY |
 | D9 | [SMART: guiding SLM reasoning with LLM assistance (arXiv 2504.09923)](https://arxiv.org/html/2504.09923v2) | paper | 2025 | Selective intervention | SUMMARY |
 | D10 | [Big Reasoning with Small Models: instruction retrieval (arXiv 2510.13935)](https://arxiv.org/html/2510.13935v1) | paper | Oct 2025 | Procedure retrieval | SUMMARY |
