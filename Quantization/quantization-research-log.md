@@ -7,6 +7,19 @@
 
 Newest entry first. Each entry: what was asked, what was done, what was found, what changed, what is open. When a later entry answers an open question, say so and link the note that holds the answer.
 
+## 2026-11-04 (late evening): passes 2 to 4 before implementation
+
+**Asked.** Start the three pre-implementation passes while the owner builds llama.cpp: evaluation methods for this PC's jobs, Ollama mechanics for applying a custom quant, and full reads of the five load-bearing papers.
+
+**Done.** Three notes: [Quantization evaluation methods for this PC](quantization-evaluation-methods-for-this-pc.md), [Ollama mechanics for custom quants](ollama-mechanics-for-custom-quants.md), [Quantization primary paper reads](quantization-primary-paper-reads.md). Patched the reasoning, distillation, and two diagramming notes where the full reads changed a number. Sources S112 to S122; S51, S52, S67, D2, D7 upgraded to FETCHED.
+
+**Found.**
+- The task-level eval already exists: evolve-lab's `loop.evaluate` over Ollama tags, driven by finetune-lab's `evalrun.py`; only a deterministic tool-call set is missing. Public harnesses work over Ollama's OpenAI endpoint for generative tasks only.
+- Ollama 0.40.10 here: flash attention auto-on for gemma4, KV cache still f16, no GGUF quantization on import, no imatrix in its quantizer; the Modelfile needs FROM, DRAFT and a second FROM (projector). Registry blob is 250 MiB larger than Unsloth's Q4_K_M, so the mixes differ.
+- Paper corrections: ParetoQ's 90/10 is one 125M experiment; GPTQ beats AWQ at 4-bit on every Qwen3 size; 4-bit KV is under 1% on 14B+ reasoners but 3-bit KV and W4A4 are not; blueprints help small models most on code but APO and template search sometimes hurt; DAG-Math's format is Edge, Parents, Node and correct answers are at most 80% closed.
+
+**Open.** 16. Confirm the projector FROM syntax on a scratch model. 17. Build the 30 to 50 item tool-call set (owner reviews). 18. Decide whether to install lm-eval or bfcl-eval (gatekeeper). 19. Read the rest of 2504.04823 (appendix past 100k chars) and DAG-Math's appendix for the checker rules.
+
 ## 2026-11-04 (evening): second pass, deep dives and the first experiment
 
 **Asked.** Run the KL test on gemma4:12b quants; go deeper on every requested topic; find repos; connect quantization with AI-ingestible diagramming and reasoning maps.

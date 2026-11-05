@@ -34,6 +34,9 @@ A trained model stores every weight as a 16-bit float. Quantization stores each 
 | [Quantization and reasoning models](quantization-and-reasoning-models.md) | What quantization does to thinking models and agent workers. |
 | [Quantization of MoE and multimodal models](quantization-of-moe-and-multimodal-models.md) | Expert-level mixed precision; how qwen3:30b-a3b could fit; vision towers. |
 | [Quantization serving kernels and speculative decoding](quantization-serving-kernels-and-speculative-decoding.md) | Fast paths on Ampere, EXL3 numbers, speculative decoding and Gemma 4's built-in draft. |
+| [Quantization evaluation methods for this PC](quantization-evaluation-methods-for-this-pc.md) | The three-layer eval stack (KL, evolve-lab task evals, deterministic tool-call set), what public harnesses can do over Ollama, what to build first. |
+| [Ollama mechanics for custom quants](ollama-mechanics-for-custom-quants.md) | What Ollama 0.40.10 does and does not do (flash attention, KV type, no GGUF quantization, no imatrix) and the Modelfile recipe for importing a custom quant with draft and projector. |
+| [Quantization primary paper reads](quantization-primary-paper-reads.md) | Full reads of ParetoQ, Quantization Hurts Reasoning, the Qwen3 study, Blueprints and DAG-Math: confirmations, corrections, tables. |
 | [Quantization research log](quantization-research-log.md) | Dated log of what was researched, what was found, and the open questions to pick up next. |
 
 ## Bottom line for this PC (RTX 3080, 10 GB, Ampere)

@@ -107,8 +107,8 @@ Ids (S1, S2, ...) are what the other notes cite.
 
 | Id | Source | Type | Date | Used for | Label |
 |---|---|---|---|---|---|
-| S51 | [An Empirical Study of Qwen3 Quantization (arXiv 2505.02214; Springer 2026)](https://arxiv.org/html/2505.02214v1) | paper | 2025/26 | Per-size degradation, 3-bit cliff, Qwen3 vs LLaMA-3 | SUMMARY |
-| S52 | [Quantization Hurts Reasoning? (arXiv 2504.04823 v2)](https://arxiv.org/html/2504.04823v2) | paper | Aug 2025 | W4A16/W8A8 lossless, 3-bit risky, output length, KV4, AWQ over GPTQ | SUMMARY |
+| S51 | [An Empirical Study of Qwen3 Quantization (arXiv 2505.02214; Springer 2026)](https://arxiv.org/html/2505.02214v1) | paper | 2025/26 | Per-size degradation, 3-bit cliff, Qwen3 vs LLaMA-3 | FETCHED (full read 2026-11-04 evening) |
+| S52 | [Quantization Hurts Reasoning? (arXiv 2504.04823 v2)](https://arxiv.org/html/2504.04823v2) | paper | Aug 2025 | W4A16/W8A8 lossless, 3-bit risky, output length, KV4, AWQ over GPTQ | FETCHED (full read 2026-11-04 evening) |
 | S53 | [Quantized Reasoning Models Think They Need to Think Longer, but They Do Not (arXiv 2606.00206)](https://arxiv.org/pdf/2606.00206) | paper | Jun 2026 | Title only | TITLE |
 | S54 | [QuantLRM (arXiv 2602.02581)](https://arxiv.org/pdf/2602.02581) | paper | Feb 2026 | Title only | TITLE |
 | S55 | [Preserving LLM Capabilities through Calibration Data Curation (arXiv 2510.10618)](https://arxiv.org/pdf/2510.10618) | paper | Oct 2025 | Sample count, length, curation | SUMMARY |
@@ -123,7 +123,7 @@ Ids (S1, S2, ...) are what the other notes cite.
 | S64 | [MXSens (arXiv 2607.17733)](https://arxiv.org/html/2607.17733v1) | paper | Jul 2026 | Early-layer sensitivity, per-column bits | SUMMARY |
 | S65 | [Beyond Outliers: data-free layer-wise mixed precision, NSDS (arXiv 2603.17354)](https://arxiv.org/pdf/2603.17354) | paper | Mar 2026 | Calibration-free sensitivity | SUMMARY |
 | S66 | [MixLLM (MLSys 2026 oral)](https://mlsys.org/virtual/2026/oral/3805) | paper | 2026 | Global per-output-feature precision | SUMMARY |
-| S67 | [ParetoQ (arXiv 2502.02631)](https://arxiv.org/abs/2502.02631) and [facebookresearch/ParetoQ](https://github.com/facebookresearch/ParetoQ) | paper, repo | 2025 | 2-to-3-bit transition, QAT budget law, 1.58-bit result | SUMMARY |
+| S67 | [ParetoQ (arXiv 2502.02631)](https://arxiv.org/abs/2502.02631) and [facebookresearch/ParetoQ](https://github.com/facebookresearch/ParetoQ) | paper, repo | 2025 | 2-to-3-bit transition, QAT budget law, 1.58-bit result | FETCHED (full read 2026-11-04 evening) |
 | S68 | [Low-Bit Quantization Favors Undertrained LLMs (arXiv 2411.17691)](https://arxiv.org/pdf/2411.17691) | paper | Nov 2024 | Over-training makes quantization harder | TITLE |
 | S69 | [Statistically-Lossless Quantization of LLMs (arXiv 2605.02404)](https://arxiv.org/pdf/2605.02404) | paper | May 2026 | Title only | TITLE |
 | S70 | [ParetoQ summary (hychiang)](https://hychiang.info/blog/2025/paretoq-summary/) | blog | 2025 | Cross-check | SECONDARY |
@@ -168,3 +168,19 @@ Ids (S1, S2, ...) are what the other notes cite.
 | S109 | [TuneQn: sensitivity-driven selective ONNX quantization (arXiv 2507.12196)](https://arxiv.org/pdf/2507.12196) and [onnx-analyzer](https://gh.r-mj.com/dwithchenna/onnx-analyzer) | paper, tool | 2025 | Per-layer error visualization | SUMMARY |
 | S110 | [AI-Efficiency/Qwen3-Quantization-Toolkit](https://github.com/AI-Efficiency/Qwen3-Quantization-Toolkit) | repo | 2025 | Published tables | SUMMARY |
 | S111 | [Unsloth: Gemma 4, how to run locally](https://unsloth.ai/docs/models/gemma-4) | docs | 2026 | Recommended UD quant | SUMMARY |
+
+## Passes 2 to 4, 2026-11-04 evening (evals, Ollama mechanics, full paper reads)
+
+| Id | Source | Type | Date | Used for | Label |
+|---|---|---|---|---|---|
+| S112 | [Importing a Model (Ollama docs)](https://docs.ollama.com/import) and [docs/import.mdx](https://github.com/ollama/ollama/blob/main/docs/import.mdx) | docs | 2026 | GGUF not quantized on import; split-file wildcard | SUMMARY |
+| S113 | [lm-evaluation-harness local-chat-completions (PR #1174)](https://github.com/EleutherAI/lm-evaluation-harness/pull/1174) and [issue #4058](https://github.com/EleutherAI/lm-evaluation-harness/issues/4058) | repo | 2024/26 | Full URL form, logprob limits, chat template flag | SUMMARY |
+| S114 | [LLM Eval Harness guide (morphllm)](https://www.morphllm.com/llm-eval-harness) | guide | 2026 | Ollama example | SECONDARY |
+| S115 | [BFCL README](https://github.com/ShishirPatil/gorilla/blob/main/berkeley-function-call-leaderboard/README.md), [bfcl-eval on PyPI](https://pypi.org/project/bfcl-eval/), [EvalScope BFCL v4](https://evalscope.readthedocs.io/en/v1.2.0/third_party/bfcl_v4.html) | docs | 2026 | generate/evaluate, backends, remote endpoint flags | SUMMARY |
+| S116 | [Local LLM quantization benchmarks reveal silent tool-call failures (mer.vin)](https://mer.vin/news/local-llm-quantization-benchmarks-reveal-silent-tool-call-failures/) | blog | 2026 | NVFP4 vs INT8 surprise; INT4 KV failures | SUMMARY (unverified) |
+| S117 | [LLM agent evaluation metrics (Confident AI)](https://www.confident-ai.com/blog/llm-agent-evaluation-complete-guide) | vendor guide | 2026 | Deterministic tool-correctness checks | SECONDARY (vendor) |
+| S118 | [Definitive guide to AI agent evaluation (Future AGI)](https://futureagi.com/blog/definitive-guide-ai-agent-evaluation-2026/) | vendor guide | 2026 | Metric names; BFCL tracks | SECONDARY (vendor) |
+| S119 | [LLMs Are Not Robust Multiple Choice Selectors (arXiv 2309.03882)](https://arxiv.org/pdf/2309.03882) | paper | 2023 | MC fragility | TITLE |
+| S120 | [Ollama 0.34 speculative decoding by default (runaihome)](https://runaihome.com/blog/ollama-034-speculative-decoding-default-home-lab-2026/) and [speculative decoding setup 2026](https://runaihome.com/blog/speculative-decoding-llama-cpp-local-llm-setup-2026/) | blogs | 2026 | DRAFT directive, draft_num_predict | SECONDARY |
+| S121 | [Unsloth: Gemma 4 QAT](https://unsloth.ai/docs/models/gemma-4/qat) and [Google Gemma docs](https://ai.google.dev/gemma/docs/base) | docs | 2026 | QAT GGUF availability; q4_0 warning | SUMMARY |
+| S122 | This PC: `ollama create --help`, `ollama show --modelfile gemma4:12b`, service journal, drop-ins, `/v1/models`, evolve-lab `loop.py` and tasks, finetune-lab `evalrun.py` | local | 2026-11-04 | Ollama mechanics and the existing eval harness | LOCAL |
