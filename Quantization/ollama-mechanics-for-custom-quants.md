@@ -2,8 +2,8 @@
 
 # Ollama mechanics for custom quants
 
-> **TL;DR:** On this PC Ollama 0.40.10 turns flash attention on by itself for gemma4 but the KV cache is still f16 (OLLAMA_KV_CACHE_TYPE unset), it never quantizes GGUF on import (and its safetensors quantizer has no imatrix), and a custom quant goes in through a Modelfile with FROM for the weights, DRAFT for the multi-token-prediction draft, a second FROM for the vision projector, and RENDERER/PARSER gemma4.
-> **Source:** Pass 3, 2026-11-04 evening: the installed Ollama 0.40.10 (ollama create --help, ollama show --modelfile gemma4:12b, the service log and drop-ins), Ollama's import docs, and 2026 write-ups on the DRAFT directive and speculative decoding  ·  **Project:** finetune-lab  ·  **Updated:** 2026-11-04
+> **TL;DR:** Ollama 0.40.10 never quantizes GGUF on import and keeps the KV cache at f16; a custom quant goes in via a Modelfile (FROM weights, DRAFT, vision projector, RENDERER/PARSER gemma4).
+> **Source:** Pass 3, 2026-11-04 evening: the installed Ollama 0.40.10 (ollama create --help, ollama show --modelfile gemma4:12b, the service log and drop-ins), Ollama's import docs, and 2026 write-ups on the DRAFT directive and speculative decoding  ·  **Project:** evolve-lab  ·  **Updated:** 2026-11-04
 
 Everything below was read on this PC on 2026-11-04 unless labelled otherwise.
 

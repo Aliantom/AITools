@@ -2,8 +2,8 @@
 
 # Fine-tuning with quantized bases
 
-> **TL;DR:** QLoRA trains adapters on a frozen 4-bit base; the loss comes at merge time when the merged weights are re-quantized, LoftQ fixes initialization and dominates QLoRA at 2 to 4 bits, QA-LoRA and the 2026 scale-only merge keep the deployed model at 4-bit without the re-quantization loss, and finetune-lab should measure its own merge loss by KL.
-> **Source:** Second research pass 2026-11-04: LoftQ (2310.08659), QA-LoRA, LQ-LoRA, LQER (2402.02446), Scale-QLoRA (2609.04526), LoRA review (2501.00365), LoRA redux (2604.21905), QLoRA (memory)  ·  **Project:** finetune-lab  ·  **Updated:** 2026-11-04
+> **TL;DR:** QLoRA loses quality when merged weights are re-quantized; LoftQ and QA-LoRA avoid this, so finetune-lab should measure its own merge loss by KL divergence.
+> **Source:** Second research pass 2026-11-04: LoftQ (2310.08659), QA-LoRA, LQ-LoRA, LQER (2402.02446), Scale-QLoRA (2609.04526), LoRA review (2501.00365), LoRA redux (2604.21905), QLoRA (memory)  ·  **Project:** evolve-lab  ·  **Updated:** 2026-11-04
 
 This is the family finetune-lab lives in. The base model is quantized to fit the card; small trainable adapters learn the task; the question is what you deploy afterwards and how much the quantization costs you at each step.
 

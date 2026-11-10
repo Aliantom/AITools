@@ -2,8 +2,8 @@
 
 # Rounding methods deep dive
 
-> **TL;DR:** Round-to-nearest is provably not optimal; the family from AdaRound through GPTQ to AutoRound/SignRoundV2 learns or propagates rounding decisions to minimize output error, GPTQ is now understood as Babai's nearest-plane lattice algorithm, and the 2025 to 2026 frontier is better initialization (NeUQI) and extreme-low-bit rounding (SignRoundV2, D²Quant, ReQuant).
-> **Source:** Second research pass 2026-11-04: AdaRound and BRECQ (AIMET docs, arXiv 2102.05426), GPTQ-as-Babai (2507.18553), NeUQI (2505.17595), Provable PTQ/Qronos (2508.04853), SignRoundV2 (2512.04746), D²Quant, ReQuant  ·  **Project:** finetune-lab  ·  **Updated:** 2026-11-04
+> **TL;DR:** Round-to-nearest is provably suboptimal; AdaRound to GPTQ to SignRoundV2 learn rounding to cut output error, GPTQ is Babai nearest-plane, and the frontier is better init and extreme-low-bit rounding.
+> **Source:** Second research pass 2026-11-04: AdaRound and BRECQ (AIMET docs, arXiv 2102.05426), GPTQ-as-Babai (2507.18553), NeUQI (2505.17595), Provable PTQ/Qronos (2508.04853), SignRoundV2 (2512.04746), D²Quant, ReQuant  ·  **Project:** evolve-lab  ·  **Updated:** 2026-11-04
 
 Given a scale, which integer should each weight become? "Nearest" treats every weight independently. Every method below uses the fact that the weights act together: an error in one can be cancelled by a deliberate opposite error in a neighbour, as judged by the layer's output on calibration data.
 

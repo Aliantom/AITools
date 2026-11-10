@@ -2,8 +2,8 @@
 
 # Quantization glossary
 
-> **TL;DR:** Every quantization term with what it is, why it exists, and its modern LLM-era descendant; about half the classic list is CNN-era and has been replaced by group quantization, GPTQ-style rounding, SmoothQuant and rotation.
-> **Source:** Owner request 2026-11-04: explain a list of quantization terms (uniform, non-uniform, per-channel, group, mixed precision, calibration, LSQ, AdaRound, bias correction, CLE, OCS, distillation, BN folding) and whether they still apply  ·  **Project:** finetune-lab  ·  **Updated:** 2026-11-04
+> **TL;DR:** Every quantization term with what it is, why it exists and its modern descendant; about half the classic list is CNN-era, replaced by group quantization, GPTQ rounding and rotation.
+> **Source:** Owner request 2026-11-04: explain a list of quantization terms (uniform, non-uniform, per-channel, group, mixed precision, calibration, LSQ, AdaRound, bias correction, CLE, OCS, distillation, BN folding) and whether they still apply  ·  **Project:** evolve-lab  ·  **Updated:** 2026-11-04
 
 Each entry says what the term means, why anyone invented it, and what people use today in its place. "Classic" means the 2018 to 2021 era of quantizing convolutional networks for phones (the Qualcomm AIMET and Google TensorFlow Lite lineage). "LLM-era" means 2022 onward. Evidence labels: VERIFIED = read in a source listed in [Quantization sources](quantization-sources.md); MEMORY = from general knowledge, check before relying on an exact number.
 

@@ -2,8 +2,8 @@
 
 # Quantization and reasoning models
 
-> **TL;DR:** For reasoning and thinking models, W8A8 or W4A16 is near-lossless, 3-bit is risky, harder tasks and RL-trained reasoners degrade most, aggressive quantization makes small models produce longer outputs, 4-bit KV cache is fine, and AWQ is recommended over GPTQ for weight-only; Qwen3-14B loses 1% MMLU at GPTQ 4-bit while the 0.6B loses 10%.
-> **Source:** Second research pass 2026-11-04: 'Quantization Hurts Reasoning?' (2504.04823 v2), 'An Empirical Study of Qwen3 Quantization' (2505.02214, Springer 2026), 'Quantized Reasoning Models Think They Need to Think Longer' (2606.00206, title), QuantLRM (2602.02581, title), ParoQuant  ·  **Project:** finetune-lab  ·  **Updated:** 2026-11-04
+> **TL;DR:** For reasoning models W8A8 or W4A16 is near-lossless and 3-bit is risky; harder tasks degrade most, small models lose more (Qwen3 0.6B -10% MMLU vs 14B -1%), 4-bit KV is fine.
+> **Source:** Second research pass 2026-11-04: 'Quantization Hurts Reasoning?' (2504.04823 v2), 'An Empirical Study of Qwen3 Quantization' (2505.02214, Springer 2026), 'Quantized Reasoning Models Think They Need to Think Longer' (2606.00206, title), QuantLRM (2602.02581, title), ParoQuant  ·  **Project:** evolve-lab  ·  **Updated:** 2026-11-04
 
 The local workers here (gemma4 with thinking on by default, qwen3.5, the deepseek 8B) are reasoning-style models used for agent work, which is the use quantization hurts first. This note collects what is measured.
 

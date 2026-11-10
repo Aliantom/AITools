@@ -2,8 +2,8 @@
 
 # Calibration deep dive
 
-> **TL;DR:** Calibration for PTQ saturates around 128 samples of 2048 tokens, domain match matters more than volume, Wikipedia-only calibration flatters perplexity tests, and for GGUF the imatrix should be built from the use-case text and evaluated on something else.
-> **Source:** Second research pass 2026-11-04: calibration data studies (arXiv 2409.11055, 2510.10618, LLMC 2405.06001), llama.cpp imatrix docs and discussions, Unsloth docs  ·  **Project:** finetune-lab  ·  **Updated:** 2026-11-04
+> **TL;DR:** PTQ calibration saturates near 128 samples of 2048 tokens; domain match beats volume, Wikipedia-only flatters perplexity, and an imatrix should use use-case text and be evaluated elsewhere.
+> **Source:** Second research pass 2026-11-04: calibration data studies (arXiv 2409.11055, 2510.10618, LLMC 2405.06001), llama.cpp imatrix docs and discussions, Unsloth docs  ·  **Project:** evolve-lab  ·  **Updated:** 2026-11-04
 
 Calibration is the step where PTQ looks at data. It decides activation ranges (for activation quantization), importance weights (imatrix, AWQ scales, GPTQ Hessians) and, in rounding-optimization methods, the error the method minimizes. Getting it wrong is the most common way a "4-bit" model turns out worse than it had to be.
 

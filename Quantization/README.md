@@ -3,7 +3,7 @@
 # Quantization: overview
 
 > **TL;DR:** Start page for the quantization research folder: the one idea, a map of the notes, the bottom line for the RTX 3080, and how this folder is mirrored to Aliantom/AITools.
-> **Source:** Owner request 2026-11-04: document everything about AI quantization (methods, PTQ/QAT, optimization, sources) and keep it mirrored to GitHub  ·  **Project:** finetune-lab  ·  **Updated:** 2026-11-04
+> **Source:** Owner request 2026-11-04: document everything about AI quantization (methods, PTQ/QAT, optimization, sources) and keep it mirrored to GitHub  ·  **Project:** evolve-lab  ·  **Updated:** 2026-11-04
 
 This folder holds everything researched about quantizing AI models: what the methods are, which are current, what the evidence says, and what to do on this PC. It is written so a self-taught developer can follow it, with the "why" spelled out.
 

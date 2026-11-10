@@ -2,8 +2,8 @@
 
 # Quantization-aware training (QAT) methods
 
-> **TL;DR:** QAT recovers most of the accuracy lost at 4 bits and below (torchao: up to 96% of the PTQ loss on HellaSwag), model vendors now ship QAT checkpoints (Gemma 3/4, gpt-oss), the recipe is about 10% of training with fake quantization and teacher distillation, and on this PC the practical form is QLoRA fine-tuning.
-> **Source:** Web research 2026-11-04 (PyTorch torchao blogs and paper, NVIDIA Model Optimizer blog, QATFactory, Unsloth docs, TensorFoundry) plus general knowledge, labelled  ·  **Project:** finetune-lab  ·  **Updated:** 2026-11-04
+> **TL;DR:** QAT recovers most 4-bit-and-below loss (torchao: up to 96% of the PTQ gap) and vendors ship QAT checkpoints (Gemma 3/4, gpt-oss); on this PC the practical form is QLoRA fine-tuning.
+> **Source:** Web research 2026-11-04 (PyTorch torchao blogs and paper, NVIDIA Model Optimizer blog, QATFactory, Unsloth docs, TensorFoundry) plus general knowledge, labelled  ·  **Project:** evolve-lab  ·  **Updated:** 2026-11-04
 
 QAT trains (or fine-tunes) the model while simulating quantization, so the weights settle into values that survive rounding. It costs GPU time and needs training data; PTQ does not. The evidence says it only matters at 4 bits and below, and that is exactly where everyone wants to be.
 

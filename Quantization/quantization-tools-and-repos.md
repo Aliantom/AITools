@@ -2,8 +2,8 @@
 
 # Quantization tools and repos
 
-> **TL;DR:** The quantization toolchain for this PC: llama.cpp for GGUF, GPTQModel and llm-compressor for vLLM formats, exllamav3 for EXL3, torchao for QAT, bitsandbytes and Unsloth for QLoRA, Nunchaku for diffusion; AIMET, Model Optimizer and TensorRT-LLM matter mainly for other hardware.
-> **Source:** Web research 2026-11-04 plus general knowledge of the quantization tooling landscape, labelled  ·  **Project:** finetune-lab  ·  **Updated:** 2026-11-04
+> **TL;DR:** Toolchain for this PC: llama.cpp for GGUF, GPTQModel/llm-compressor for vLLM, exllamav3 for EXL3, torchao for QAT, bitsandbytes/Unsloth for QLoRA; AIMET and TensorRT-LLM matter for other hardware.
+> **Source:** Web research 2026-11-04 plus general knowledge of the quantization tooling landscape, labelled  ·  **Project:** evolve-lab  ·  **Updated:** 2026-11-04
 
 Status column is as of 2026-11-04 and mixes what the sources said (VERIFIED) with general knowledge (MEMORY). "Ampere" says whether it is useful on the RTX 3080.
 

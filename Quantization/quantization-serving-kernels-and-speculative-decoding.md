@@ -2,8 +2,8 @@
 
 # Serving kernels and speculative decoding
 
-> **TL;DR:** On Ampere the fast paths are llama.cpp CUDA kernels, Marlin INT4×FP16 and EXL3; EXL3 at 4.0 bpw beats GGUF Q4_K_M on KL at smaller size while GGUF wins back above 5 bits; speculative decoding stacks with quantization and gemma4 already ships a multi-token-prediction draft that Ollama uses.
-> **Source:** Second research pass 2026-11-04: EXL3 community measurements (ubergarm gist, efraingaray, atomic.chat), 'Speculative Decoding Meets Quantization' (2505.22179), SD2 (2504.08838), Quasar (2603.01399), ML-SpecQD (2503.13565), Ollama/Unsloth MTP draft files, Marlin and QServe (memory)  ·  **Project:** finetune-lab  ·  **Updated:** 2026-11-04
+> **TL;DR:** On Ampere use llama.cpp CUDA, Marlin or EXL3; EXL3 at 4.0 bpw beats GGUF Q4_K_M on KL, GGUF wins above 5 bits; gemma4 ships an MTP draft that Ollama uses for speculative decoding.
+> **Source:** Second research pass 2026-11-04: EXL3 community measurements (ubergarm gist, efraingaray, atomic.chat), 'Speculative Decoding Meets Quantization' (2505.22179), SD2 (2504.08838), Quasar (2603.01399), ML-SpecQD (2503.13565), Ollama/Unsloth MTP draft files, Marlin and QServe (memory)  ·  **Project:** evolve-lab  ·  **Updated:** 2026-11-04
 
 ## 1. What runs fast on an RTX 3080
 

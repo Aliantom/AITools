@@ -2,8 +2,8 @@
 
 # Quantization KL experiment 001: gemma-4-12b-it on the RTX 3080
 
-> **TL;DR:** Pre-registration of the first measured quantization test on this PC: eleven gemma-4-12b-it quantizations plus two KV-cache settings scored by KL divergence against a Q8_0 reference on held-out wiki, chat and code text; thresholds fixed in advance; status and results recorded below.
-> **Source:** Owner request 2026-11-04: run the KL test on gemma4:12b quants. Pre-registered before any result was read.  ·  **Project:** finetune-lab  ·  **Updated:** 2026-11-04
+> **TL;DR:** Pre-registration of the first measured quant test here: eleven gemma-4-12b-it quants and two KV settings scored by KL against Q8_0 on wiki, chat and code text; thresholds fixed in advance.
+> **Source:** Owner request 2026-11-04: run the KL test on gemma4:12b quants. Pre-registered before any result was read.  ·  **Project:** evolve-lab  ·  **Updated:** 2026-11-04
 
 Scripts: `experiments/kl_gemma4_12b.sh`, `experiments/prep_eval_data.py`, `experiments/kl_report.py` (this folder). Working directory on disk: `/mnt/ai-storage/quant-eval/gemma-4-12b-it/`. Model files: `/mnt/ai-storage/models/gguf/gemma-4-12b-it/`.
 

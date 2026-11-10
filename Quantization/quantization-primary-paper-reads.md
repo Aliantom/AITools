@@ -2,8 +2,8 @@
 
 # Primary paper reads
 
-> **TL;DR:** Full reads confirmed the headline claims but corrected details: ParetoQ's 90/10 split was measured on one 125M model and no tokens-per-byte law appears in the text; GPTQ beats AWQ at 4-bit on every Qwen3 size (8B: 73.4 vs 69.3 MMLU) while the reasoning study prefers AWQ for simplicity; 4-bit KV loses under 1% on 14B and 32B reasoners; blueprints help small models by up to 20 points but template search and APO sometimes hurt; DAG-Math's format is Edge, Parents, Node and even correct answers are at most 80% logically closed.
-> **Source:** Pass 4, 2026-11-04 evening: full fetches of ParetoQ (2502.02631), Quantization Hurts Reasoning v2 (2504.04823), An Empirical Study of Qwen3 Quantization (2505.02214), Blueprints for SLMs (2506.08669), DAG-Math (2510.19842); the fetch tool summarized the HTML, so numbers were copied from its extraction and the two long papers were read to the 100k-character mark  ·  **Project:** finetune-lab  ·  **Updated:** 2026-11-04
+> **TL;DR:** Full reads confirmed the headline claims but fixed details: ParetoQ split is from one 125M model, GPTQ beats AWQ at 4-bit on Qwen3, 4-bit KV loses under 1%, blueprints lift small models 20 points.
+> **Source:** Pass 4, 2026-11-04 evening: full fetches of ParetoQ (2502.02631), Quantization Hurts Reasoning v2 (2504.04823), An Empirical Study of Qwen3 Quantization (2505.02214), Blueprints for SLMs (2506.08669), DAG-Math (2510.19842); the fetch tool summarized the HTML, so numbers were copied from its extraction and the two long papers were read to the 100k-character mark  ·  **Project:** evolve-lab  ·  **Updated:** 2026-11-04
 
 Each entry: what the full text confirmed, what it corrected in the earlier summary-level notes, and the numbers to keep. The earlier notes were patched where a number changed.
 

@@ -2,8 +2,8 @@
 
 # Quantization of MoE and multimodal models
 
-> **TL;DR:** MoE models quantize per expert: rarely-used experts can go to 2 bits while hot experts stay at 4 to 8, which is how qwen3:30b-a3b could fit this card (it currently spills 4 GB to swap); multimodal models need the vision tower kept at higher precision and modality-aware expert allocation.
-> **Source:** Second research pass 2026-11-04: GEMQ (2605.23078), BitsMoE (2606.00079), TileQ (2605.09281), MODE (2606.17118), Unsloth Dynamic 2.0 docs, torchao MoE QAT RFC  ·  **Project:** finetune-lab  ·  **Updated:** 2026-11-04
+> **TL;DR:** MoE quantizes per expert (rare experts to 2 bits, hot ones 4-8), which could fit qwen3:30b-a3b on this card; multimodal models need the vision tower kept at higher precision.
+> **Source:** Second research pass 2026-11-04: GEMQ (2605.23078), BitsMoE (2606.00079), TileQ (2605.09281), MODE (2606.17118), Unsloth Dynamic 2.0 docs, torchao MoE QAT RFC  ·  **Project:** evolve-lab  ·  **Updated:** 2026-11-04
 
 Two of the installed models are special cases: `qwen3:30b-a3b` is a mixture of experts (30.5B parameters, 3.3B active, 128 experts per layer across 48 layers, 8 active per token) and `gemma4` has a vision projector and audio. (Qwen3 architecture figures VERIFIED S85; gemma4 capabilities from `ollama show`)
 

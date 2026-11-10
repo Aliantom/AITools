@@ -2,8 +2,8 @@
 
 # Quantization research log
 
-> **TL;DR:** Dated log of each quantization research pass: what was asked, what was found, what changed in the notes, and the open questions to pick up next (Unsloth claims unverified, EXL3 numbers missing, q8_0 KV quality unmeasured, nothing measured on this PC yet).
-> **Source:** Running log of quantization research sessions; started 2026-11-04  ·  **Project:** finetune-lab  ·  **Updated:** 2026-11-04
+> **TL;DR:** Dated log of each quantization research pass: asked, found, changed, and open questions (Unsloth claims unverified, EXL3 numbers missing, q8_0 KV quality unmeasured).
+> **Source:** Running log of quantization research sessions; started 2026-11-04  ·  **Project:** evolve-lab  ·  **Updated:** 2026-11-04
 
 Newest entry first. Each entry: what was asked, what was done, what was found, what changed, what is open. When a later entry answers an open question, say so and link the note that holds the answer.
 

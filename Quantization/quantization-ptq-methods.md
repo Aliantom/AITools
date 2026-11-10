@@ -2,8 +2,8 @@
 
 # Post-training quantization (PTQ) methods
 
-> **TL;DR:** Post-training quantization in 2026: GPTQ and AWQ remain the workhorses at 4-bit, rotation (QuaRot, SpinQuant, PolarQuant) is the key idea for activations and sub-4-bit, codebooks and trellises (QuIP#, AQLM, QTIP, EXL3) win at 2 to 3 bits, and AWQ collapses at 2-bit.
-> **Source:** Web research 2026-11-04 (arXiv, PyTorch, Unsloth, llama.cpp, Qualcomm AIMET, TensorFoundry) plus general knowledge, labelled  ·  **Project:** finetune-lab  ·  **Updated:** 2026-11-04
+> **TL;DR:** PTQ in 2026: GPTQ and AWQ are the 4-bit workhorses, rotation (QuaRot, SpinQuant) handles activations and sub-4-bit, codebooks and trellises (QuIP#, AQLM, EXL3) win at 2-3 bits.
+> **Source:** Web research 2026-11-04 (arXiv, PyTorch, Unsloth, llama.cpp, Qualcomm AIMET, TensorFoundry) plus general knowledge, labelled  ·  **Project:** evolve-lab  ·  **Updated:** 2026-11-04
 
 PTQ quantizes a trained model without further training, using at most a small calibration set and minutes to hours of compute. It is what produces almost every model file people download. Grouped by era and by what the method attacks. Evidence labels as in [Quantization glossary](quantization-glossary.md); source ids point to [Quantization sources](quantization-sources.md).
 

@@ -2,8 +2,8 @@
 
 # Distillation and low-bit QAT deep dive
 
-> **TL;DR:** Below 3 bits the model must re-learn, not just adapt (ParetoQ's 2-to-3-bit transition), self-distillation from the full-precision teacher is what makes sub-4-bit QAT work (BitDistiller, UPQ), the QAT share of compute should grow with total compute, and over-trained models quantize worse, so a 12B trained on many trillions of tokens loses more per bit than older models did.
-> **Source:** Second research pass 2026-11-04: ParetoQ (arXiv 2502.02631 and repo), BitDistiller (ACL 2024), LLM-QAT, UPQ (2506.09104), Bit-by-Bit (2604.07888), EdgeRazor (2605.04062), QATFactory, torchao, 'Low-bit favors undertrained LLMs' (2411.17691)  ·  **Project:** finetune-lab  ·  **Updated:** 2026-11-04
+> **TL;DR:** Below 3 bits a model must re-learn; self-distillation from the full-precision teacher makes sub-4-bit QAT work, and heavily over-trained models like a 12B lose more per bit.
+> **Source:** Second research pass 2026-11-04: ParetoQ (arXiv 2502.02631 and repo), BitDistiller (ACL 2024), LLM-QAT, UPQ (2506.09104), Bit-by-Bit (2604.07888), EdgeRazor (2605.04062), QATFactory, torchao, 'Low-bit favors undertrained LLMs' (2411.17691)  ·  **Project:** evolve-lab  ·  **Updated:** 2026-11-04
 
 ## 1. The key empirical facts
 

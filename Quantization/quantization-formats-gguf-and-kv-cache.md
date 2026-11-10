@@ -2,8 +2,8 @@
 
 # Formats, GGUF types and the KV cache
 
-> **TL;DR:** Number formats and hardware: Ampere runs INT4/INT8 only (no FP8/FP4); GGUF Q4_K_M is about 4.85 bpw with median KL 0.0075 on Mistral-7B; KV cache for an 8B costs 128 KB per token at FP16 and halves at q8_0; TurboQuant reaches about 3.5 bits per KV value with no loss.
-> **Source:** Web research 2026-11-04 (TensorFoundry field guide, llama.cpp docs, Artefact2 KL table, TurboQuant coverage) plus general knowledge, labelled  ·  **Project:** finetune-lab  ·  **Updated:** 2026-11-04
+> **TL;DR:** Ampere runs INT4/INT8 only (no FP8/FP4); GGUF Q4_K_M is ~4.85 bpw with median KL 0.0075 on Mistral-7B; an 8B KV cache costs 128 KB/token at FP16 and half at q8_0.
+> **Source:** Web research 2026-11-04 (TensorFoundry field guide, llama.cpp docs, Artefact2 KL table, TurboQuant coverage) plus general knowledge, labelled  ·  **Project:** evolve-lab  ·  **Updated:** 2026-11-04
 
 ## 1. Number formats
 

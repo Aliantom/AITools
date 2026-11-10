@@ -2,8 +2,8 @@
 
 # Mixed precision and sensitivity
 
-> **TL;DR:** Mixed precision works because layers differ in sensitivity by an order of magnitude; scalar Hessian proxies rank them poorly, output-error and Shapley-style measures do better, early layers and attention V/FFN-down tensors are usually the ones to keep high, and llama.cpp exposes all of this through --tensor-type.
-> **Source:** Second research pass 2026-11-04: CoopQ, CASA, MXSens, NSDS, WINDQuant, MixLLM, KVTuner, GEMQ, llama.cpp --tensor-type discussion  ·  **Project:** finetune-lab  ·  **Updated:** 2026-11-04
+> **TL;DR:** Layers differ ~10x in sensitivity; output-error measures rank them better than Hessian proxies; keep early layers and attention V / FFN-down high; llama.cpp --tensor-type applies it.
+> **Source:** Second research pass 2026-11-04: CoopQ, CASA, MXSens, NSDS, WINDQuant, MixLLM, KVTuner, GEMQ, llama.cpp --tensor-type discussion  ·  **Project:** evolve-lab  ·  **Updated:** 2026-11-04
 
 Not every tensor deserves the same bits. Mixed precision spends the bit budget where the model is sensitive. The questions are how to measure sensitivity, how to allocate under a size budget, and what granularity the kernels can run.
 

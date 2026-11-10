@@ -2,8 +2,8 @@
 
 # Outliers and rotation deep dive
 
-> **TL;DR:** Outliers are the root cause of quantization damage; the fixes evolved from splitting and equalizing channels to migrating ranges (SmoothQuant, AWQ) to rotating the whole residual stream (QuaRot, SpinQuant, ParoQuant), and 2026 work shows the rotation itself does nearly all the work.
-> **Source:** Second research pass 2026-11-04: ParoQuant (ICLR 2026), SINQ, PolarQuant, HARP, 'Any Orthogonal Transform Will Do', transforms survey 2608.25188, LLM.int8, SmoothQuant, QuaRot, SpinQuant (memory, labelled)  ·  **Project:** finetune-lab  ·  **Updated:** 2026-11-04
+> **TL;DR:** Outliers cause quantization damage; fixes went from channel equalizing to range migration (SmoothQuant, AWQ) to rotation (QuaRot, SpinQuant), and 2026 work shows rotation does nearly all the work.
+> **Source:** Second research pass 2026-11-04: ParoQuant (ICLR 2026), SINQ, PolarQuant, HARP, 'Any Orthogonal Transform Will Do', transforms survey 2608.25188, LLM.int8, SmoothQuant, QuaRot, SpinQuant (memory, labelled)  ·  **Project:** evolve-lab  ·  **Updated:** 2026-11-04
 
 ## 1. Where outliers come from
 

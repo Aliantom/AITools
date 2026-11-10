@@ -2,8 +2,8 @@
 
 # Quantization sources
 
-> **TL;DR:** Every paper, doc and post behind the quantization notes, with URL, date and an evidence label: 50 sources read through search summaries or fetch, plus the from-memory papers that still need their IDs checked before citing.
-> **Source:** Source register for the 2026-11-04 quantization research session (Claude Code, web search and fetch)  ·  **Project:** finetune-lab  ·  **Updated:** 2026-11-04
+> **TL;DR:** Every source behind the quantization notes with URL, date and evidence label: 50 read via search or fetch, plus from-memory papers whose IDs need checking before citing.
+> **Source:** Source register for the 2026-11-04 quantization research session (Claude Code, web search and fetch)  ·  **Project:** evolve-lab  ·  **Updated:** 2026-11-04
 
 Evidence labels:
 - **FETCHED**: the page was fetched and summarized by a tool in the session; wording checked against the summary, not the full text.

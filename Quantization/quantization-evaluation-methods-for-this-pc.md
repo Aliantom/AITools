@@ -2,8 +2,8 @@
 
 # Evaluation methods for this PC's jobs
 
-> **TL;DR:** This PC already has the task-level instrument that matters (evolve-lab's loop.evaluate scores any Ollama tag on JSON-schema tasks at temperature 0), KL divergence is the fidelity layer under it, the one missing layer is a deterministic tool-call set, and public harnesses (lm-eval, BFCL) work over Ollama's OpenAI endpoint only for generative tasks, not log-probability ones.
-> **Source:** Pass 2, 2026-11-04 evening: lm-evaluation-harness and BFCL docs and issues, agent-eval guides, the quantized tool-call failure write-up, and a read of evolve-lab's task evals and finetune-lab's evalrun harness on this PC  ·  **Project:** finetune-lab  ·  **Updated:** 2026-11-04
+> **TL;DR:** evolve-lab already scores any Ollama tag on JSON tasks, KL divergence is the fidelity layer under it, and a deterministic tool-call set is missing; lm-eval and BFCL cover generative tasks only.
+> **Source:** Pass 2, 2026-11-04 evening: lm-evaluation-harness and BFCL docs and issues, agent-eval guides, the quantized tool-call failure write-up, and a read of evolve-lab's task evals and finetune-lab's evalrun harness on this PC  ·  **Project:** evolve-lab  ·  **Updated:** 2026-11-04
 
 KL divergence says how far a quant drifts from the original model. It does not say whether the night-shift extraction still parses, whether code repairs still land, or whether tool calls still validate. One community measurement found a vendor's NVFP4 build worse than an uncalibrated INT8 and found 4-bit KV cache the only setting that produced reproducible, unrecovered tool-call failures on a 100k-token workload; the author's conclusion, "test the specific artifact", is the right one. (S116, unverified methodology)
 

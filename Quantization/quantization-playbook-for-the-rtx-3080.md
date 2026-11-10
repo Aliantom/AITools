@@ -2,8 +2,8 @@
 
 # Quantization playbook for the RTX 3080 (10 GB)
 
-> **TL;DR:** On the 3080: imatrix or Unsloth UD GGUF at Q4_K_M to Q6_K, Q8_0 under 4B, flash attention plus q8_0 KV cache, never offload to CPU, AWQ/GPTQ or EXL3 for the vLLM/transformers path, QLoRA via Unsloth for fine-tuning, and KL divergence against Q8_0 as the acceptance test.
-> **Source:** Synthesis of the 2026-11-04 quantization research applied to this PC (RTX 3080 10 GB, Ollama, llama.cpp, finetune-lab)  ·  **Project:** finetune-lab  ·  **Updated:** 2026-11-04
+> **TL;DR:** On the 3080: imatrix or Unsloth UD GGUF at Q4_K_M-Q6_K, Q8_0 under 4B, flash attention plus q8_0 KV, no CPU offload, QLoRA via Unsloth, and KL against Q8_0 as the acceptance test.
+> **Source:** Synthesis of the 2026-11-04 quantization research applied to this PC (RTX 3080 10 GB, Ollama, llama.cpp, finetune-lab)  ·  **Project:** evolve-lab  ·  **Updated:** 2026-11-04
 
 Everything here follows from [Quantization formats, GGUF and KV cache](quantization-formats-gguf-and-kv-cache.md) and [Quantization PTQ methods](quantization-ptq-methods.md). The constraint is 10 GB of VRAM on an Ampere card with INT4/INT8 kernels only. Memory, not compute, decides everything.
 
