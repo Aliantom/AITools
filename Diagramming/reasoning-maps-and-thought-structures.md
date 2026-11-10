@@ -2,7 +2,7 @@
 
 # Reasoning maps and thought structures
 
-> **TL;DR:** Reasoning topologies (chain, tree, graph, DAG) trade cost for quality and GoT reports 62% better sorting at 31% lower cost than ToT; for small models the measured wins come from giving them the plan (blueprints, thought templates, retrieved procedures) rather than more search, and DAG-shaped reasoning records make reasoning checkable.
+> **TL;DR:** GoT sorts 62% better at 31% lower cost than ToT, but for small models the wins come from handing them the plan (blueprints, templates), not more search; DAG-shaped records make reasoning checkable.
 > **Source:** Web research 2026-11-04: Graph of Thoughts (AAAI 2024), Demystifying chains/trees/graphs (2401.14295), Diagram of Thought (2409.10038), DAG-Math (ICLR 2026), Blueprints (ICML 2025), ReasonFlux, SMART, instruction retrieval (2510.13935), TemplateRL, structured templates scaling (2508.19069), self-structured reasoning (2601.03597), position paper 2605.02452  ·  **Project:** AI workstation  ·  **Updated:** 2026-11-04
 
 Two different things hide under "thought-process mapping": (a) **topologies**, the shape the model's reasoning takes at inference time (chain, tree, graph), and (b) **scaffolds**, structures given to the model in advance (templates, blueprints, procedures, decision rules). The evidence for (b) on small models is stronger and cheaper than for (a).

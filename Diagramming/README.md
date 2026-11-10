@@ -2,7 +2,7 @@
 
 # AI diagramming and reasoning maps: overview
 
-> **TL;DR:** Start page: diagrams and reasoning maps help an AI when they are text with structure (Mermaid plus a legend table, DAG-shaped reasoning records, repo maps, typed graph memory), the measured gains are largest for small and quantized local models that cannot hold the structure themselves, and the first local experiments are listed.
+> **TL;DR:** Start page: diagrams help AI when they are structured text (Mermaid plus legend table, DAG reasoning records, repo maps); gains are largest for small quantized local models; first experiments listed.
 > **Source:** Owner request 2026-11-04: can AI-ingestible diagramming, system logic flow and thought-process mapping be tuned to improve intelligence now and over time, and how does that go hand in hand with quantization  ·  **Project:** AI workstation  ·  **Updated:** 2026-11-04
 
 **Where this lives.** Vault folder `Machine/Research/AI diagramming and reasoning maps/`, mirrored hourly to `Aliantom/AITools` under `Diagramming/` by the same script as the Quantization folder. Edit here, not in the repo.

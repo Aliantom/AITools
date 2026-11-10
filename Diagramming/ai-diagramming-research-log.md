@@ -2,7 +2,7 @@
 
 # AI diagramming research log
 
-> **TL;DR:** Dated log: first pass on 2026-11-04 established that text diagrams with legend tables and small-model scaffolds are the evidence-backed moves, found no study that tests scaffolds on quantized models, and queued five local experiments.
+> **TL;DR:** Log: the 2026-11-04 pass found text diagrams with legend tables and small-model scaffolds are evidence-backed, no study tests them on quantized models, and queued five local experiments.
 > **Source:** Running log for the AI diagramming and reasoning maps research; started 2026-11-04  ·  **Project:** AI workstation  ·  **Updated:** 2026-11-04
 
 ## 2026-11-04 (late evening): full reads of Blueprints and DAG-Math

@@ -2,7 +2,7 @@
 
 # Graph memory and knowledge graphs for agents
 
-> **TL;DR:** Graph memory (typed, temporal nodes and edges) is where 'intelligence over time' can accumulate, STRATA and procedural graphs show self-maintained experience graphs beating flat memories on agent benchmarks (self-reported), but a 2026 line of work finds simple retrieval matches elaborate hierarchies and graph memory is a poisoning surface; the vault already chose hybrid search, so the move here is a typed experience graph on top of it, not a new memory product.
+> **TL;DR:** Typed, temporal graph memory shows gains on agent benchmarks (self-reported), but simple retrieval often matches it and it can be poisoned; build a typed experience graph on top of hybrid search.
 > **Source:** Web research 2026-11-04: Zep (2501.13956), Mem0/Zep comparisons, STRATA (2610.19386), MEGA (2608.10504), Procedural Graphs (2609.09153), self-improvement survey (2607.13104), ACE (2510.04618), Memanto, agentic context management (2607.21503), selection integrity (2606.12290); the vault's Agentic graphs report  ·  **Project:** AI workstation  ·  **Updated:** 2026-11-04
 
 ## 1. The landscape

@@ -2,7 +2,7 @@
 
 # Applying diagrams and maps to this system
 
-> **TL;DR:** Five concrete, cheap moves ranked by value: a generated Mermaid-plus-legend map of the AI stack, a repo map for the local coding agent, a blueprint library for the 4-bit workers tested on the existing extraction and code-repair evals, DAG-shaped reasoning records on hard tasks, and a quantization sensitivity map emitted by the KL pipeline; each with a pre-registrable test and a stop rule.
+> **TL;DR:** Five cheap moves ranked: Mermaid map of the AI stack, repo map for the local coder, blueprints for 4-bit workers, DAG reasoning records, quant sensitivity map; each has a test and stop rule.
 > **Source:** Synthesis 2026-11-04 of the diagramming and quantization research against this PC's stack (vault, night-shift runner, evolve-lab, finetune-lab, Ollama workers)  ·  **Project:** AI workstation  ·  **Updated:** 2026-11-04
 
 Ordered by expected value against cost. Each item names the artefact, the test, and the stop rule. None of these needs a new tool with a new role; each extends something that exists.

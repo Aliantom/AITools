@@ -2,7 +2,7 @@
 
 # Ingestible diagram formats
 
-> **TL;DR:** Mermaid is the default AI-readable diagram format (every model writes and reads it, GitHub renders it), the substance belongs in a legend table keyed to node ids, Structurizr DSL is the C4 option, JSON Canvas is Obsidian's open whiteboard format, Aider-style repo maps are the proven code diagram, and validation-plus-repair loops take Mermaid generation from about 70% to near 100% valid.
+> **TL;DR:** Mermaid plus a legend table is the default AI-readable diagram format; Structurizr for C4, JSON Canvas for Obsidian, repo maps for code; validate-and-repair lifts Mermaid from ~70% to ~100% valid.
 > **Source:** Web research 2026-11-04 (diagram-as-code comparisons, MermaidSeqBench, Mermaid repair studies, JSON Canvas spec, Aider repo map, llms.txt adoption) plus the owner's AITools diagram guide  ·  **Project:** AI workstation  ·  **Updated:** 2026-11-04
 
 "Ingestible" means a model receives the diagram as text with explicit structure. A PNG is opaque to a text model and lossy even to a vision model. Everything below is text.
