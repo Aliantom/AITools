@@ -5,6 +5,9 @@
 > **TL;DR:** Ollama 0.40.10 never quantizes GGUF on import and keeps the KV cache at f16; a custom quant goes in via a Modelfile (FROM weights, DRAFT, vision projector, RENDERER/PARSER gemma4).
 > **Source:** Pass 3, 2026-11-04 evening: the installed Ollama 0.40.10 (ollama create --help, ollama show --modelfile gemma4:12b, the service log and drop-ins), Ollama's import docs, and 2026 write-ups on the DRAFT directive and speculative decoding  ·  **Project:** evolve-lab  ·  **Updated:** 2026-11-04
 
+r
+# Ollama mechanics for custom quants
+
 Everything below was read on this PC on 2026-11-04 unless labelled otherwise.
 
 ## 1. What is running
